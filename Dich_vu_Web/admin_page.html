@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <link rel="stylesheet" href="css/global_style.css">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+            crossorigin="anonymous">
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+            crossorigin="anonymous"></script>
+
+      <link rel="shortcut icon" type="image/png" href="resources/imgs/logo.png" />
+      <title>Book store</title>
+</head>
+<style>
+      #linkDashboard,
+      #linkItemManager,
+      #linkOrderManager {
+            color: white;
+      }
+
+      #linkDashboard:hover,
+      #linkItemManager:hover,
+      #linkOrderManager:hover {
+            color: #81ecec;
+      }
+</style>
+
+<body>
+      <nav class="navbar navbar-expand-lg sticky-top navbar-light color_navbar">
+            <a class="navbar-brand" href="#">
+                  <img src="resources/imgs/logo.png" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                  aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                              <a class="nav-link" href="#" id="linkDashboard">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                              <a class="nav-link" href="#" id="linkItemManager">Quản lý sản phẩm</a>
+                        </li>
+                  </ul>
+                  <div class="nav-item dropdown my-2 my-lg-0" style="display: block; margin: auto 20px;">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                              aria-expanded="false">
+                              <button class="btn btn-primary">
+                                    <i>
+                                          <img src="resources/imgs/icons/user.png" />
+                                    </i>
+                                    <span>Chào, admin</span>
+                              </button>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <a class="dropdown-item" href="#">Thoát tài khoản</a>
+                        </div>
+                  </div>
+            </div>
+            </div>
+      </nav>
+
+      <div class="container">
+            <div class="web_body_wraper">
+                  <div class="row" id="dashboard">
+                        <div class="col-md-6" id="piechartItems"></div>
+                        <div class="col-md-6" id="piechartRevenue"></div>
+                        <canvas class="col-md-12" id="myChart" width="400" height="400" style="margin-top: 40px;"></canvas>
+                  </div>
+                  <div id="itemManager">
+                        <h1>Quản lý sản phẩm</h1>
+                        <button class="btn btn-success" style="float: right; margin: 20px;" id="btnAddItem">
+                              <span>Thêm</span>
+                        </button>
+                        <div class="table-responsive">
+                              <table class="table table-bordered">
+                                    <thead class="thead-light">
+                                          <tr>
+                                                <th>
+                                                      <i class="fa fa-list" aria-hidden="true"></i>No.
+                                                </th>
+                                                <th>ID</th>
+                                                <th>Hình ảnh</th>
+                                                <th>Tên sản phẩm</th>
+                                                <th>Nhà sản xuất</th>
+                                                <th>Loại</th>
+                                                <th>Giá bán (VND)</th>
+                                                <th>Giá nhập (VND)</th>
+                                                <th>Số lượng tồn</th>
+                                                <th>Doanh thu (VND)</th>
+                                                <th>Edit</th>
+                                          </tr>
+                                    </thead>
+                                    <tbody>
+                                          <tr>
+                                                <td>1</td>
+                                                <td>#000001</td>
+                                                <td>
+                                                      <img src="resources/imgs/small/5 Centimet Trên Giây_Nhà Xuất Bản Văn Học_Nhà Sách Tiki Sách tiếng Việt Sách văn học_small.jpg">
+                                                </td>
+                                                <td>5 Centimet Trên Giây</td>
+                                                <td>NXB Văn học</td>
+                                                <td>Sách văn học</td>
+                                                <td>68,000</td>
+                                                <td>50,000</td>
+                                                <td>25</td>
+                                                <td>1,200,000</td>
+                                                <td>
+                                                      <button class="btn btn-warning" id="btnEditItem">Edit</button>
+                                                      <br>
+                                                      <br>
+                                                      <br>
+                                                      <button class="btn btn-danger" id="btnEditItem">Delete</button>
+                                                </td>
+                                          </tr>
+                                          <tr>
+                                                <td>2</td>
+                                                <td>#000002</td>
+                                                <td>
+                                                      <img src="resources/imgs/small/7 Bí Quyết Giúp Tình Yêu Vững Bền_Nhà Xuất Bản Phụ Nữ_Nhà Sách Tiki Sách tiếng Việt Sách Tâm lý - Giới tính_small.jpg">
+                                                </td>
+                                                <td>7 Bí Quyết Giúp Tình Yêu Bền Vững</td>
+                                                <td>NXB Phụ nữ</td>
+                                                <td>Sách tâm lý</td>
+                                                <td>78,000</td>
+                                                <td>56,000</td>
+                                                <td>27</td>
+                                                <td>1,900,000</td>
+                                                <td>
+                                                      <button class="btn btn-warning" id="btnEditItem2">Edit</button>
+                                                      <br>
+                                                      <br>
+                                                      <br>
+                                                      <button class="btn btn-danger" id="btnEditItem">Delete</button>
+                                                </td>
+                                          </tr>
+                                    </tbody>
+                              </table>
+                        </div>
+                  </div>
+            </div>
+      </div>
+      <div style="clear: both;"></div>
+</body>
+<footer>
+      <div class="web_footer_wraper">
+            <div class="color_footer">
+                  <div>Copyright © 2018. Đây là một sản phẩm của nhóm XML và ứng dụng - CNTT KHTN K2015</div>
+            </div>
+      </div>
+</footer>
+
+<!-- BEGIN Modal Add Item -->
+<div class="modal fade" id="modalAddItem" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                  <div class="modal-header" style="float: left; display: flex;">
+                        <h4 class="modal-title" style="float: left; display: flex;">
+                              Thêm sản phẩm
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                              ×</button>
+                  </div>
+                  <div class="modal-body modal_information">
+                        <div class="row">
+                              <div class="col-md-3 entry_information">
+                                    <label>Hình ảnh (550x550)</label>
+                              </div>
+                              <div class="col-md-9 entry_information">
+                                    <input type="file" />
+                              </div>
+
+                              <div class="col-md-3 entry_information">
+                                    <label>Tên sản phẩm</label>
+                              </div>
+                              <div class="col-md-9 entry_information">
+                                    <input class="form-control" type="text" placeholder="Nhập tên sản phẩm" />
+                              </div>
+
+                              <div class="col-md-3 entry_information">
+                                    <label>Nhà sản xuất (NXB)</label>
+                              </div>
+                              <div class="col-md-9 entry_information">
+                                    <input class="form-control" type="text" placeholder="Nhập tên nhà sản xuất (NXB)" />
+                              </div>
+
+                              <div class="col-md-3 entry_information">
+                                    <label>Loại</label>
+                              </div>
+                              <div class="col-md-9 entry_information">
+                                    <input class="form-control" type="text" placeholder="Nhập loại sản phẩm" />
+                              </div>
+
+                              <div class="col-md-3 entry_information">
+                                    <label>Giá bán (VND)</label>
+                              </div>
+                              <div class="col-md-9 entry_information">
+                                    <input class="form-control" type="number" placeholder="Nhập giá bán của sản phẩm" />
+                              </div>
+
+                              <div class="col-md-3 entry_information">
+                                    <label>Giá nhập (VND)</label>
+                              </div>
+                              <div class="col-md-9 entry_information">
+                                    <input class="form-control" type="number" placeholder="Nhập giá nhập về của sản phẩm" />
+                              </div>
+
+                              <div class="col-md-3 entry_information">
+                                    <label>Số lượng tồn</label>
+                              </div>
+                              <div class="col-md-9 entry_information">
+                                    <input class="form-control" type="number" placeholder="Nhập số lượng có trong kho" />
+                              </div>
+                        </div>
+                  </div>
+                  <div class="modal-footer modal_information">
+                        <button class="btn btn-success">Xong</button>
+                        <button class="btn btn-info">Hủy</button>
+                  </div>
+            </div>
+      </div>
+</div>
+<!-- END Modal Add Item -->
+
+<!-- BEGIN Modal Add Item -->
+<div class="modal fade" id="modalEditItem" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                  <div class="modal-header" style="float: left; display: flex;">
+                        <h4 class="modal-title" style="float: left; display: flex;">
+                              Thêm sản phẩm
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                              ×</button>
+                  </div>
+                  <div class="modal-body modal_information">
+                        <div class="row">
+                              <div class="col-md-3 entry_information">
+                                    <label>Hình ảnh (550x550)</label>
+                              </div>
+                              <div class="col-md-9 entry_information">
+                                    <input type="file" />
+                              </div>
+
+                              <div class="col-md-3 entry_information">
+                                    <label>Tên sản phẩm</label>
+                              </div>
+                              <div class="col-md-9 entry_information">
+                                    <input class="form-control" type="text" placeholder="Nhập tên sản phẩm" />
+                              </div>
+
+                              <div class="col-md-3 entry_information">
+                                    <label>Nhà sản xuất (NXB)</label>
+                              </div>
+                              <div class="col-md-9 entry_information">
+                                    <input class="form-control" type="text" placeholder="Nhập tên nhà sản xuất (NXB)" />
+                              </div>
+
+                              <div class="col-md-3 entry_information">
+                                    <label>Loại</label>
+                              </div>
+                              <div class="col-md-9 entry_information">
+                                    <input class="form-control" type="text" placeholder="Nhập loại sản phẩm" />
+                              </div>
+
+                              <div class="col-md-3 entry_information">
+                                    <label>Giá bán (VND)</label>
+                              </div>
+                              <div class="col-md-9 entry_information">
+                                    <input class="form-control" type="number" placeholder="Nhập giá bán của sản phẩm" />
+                              </div>
+
+                              <div class="col-md-3 entry_information">
+                                    <label>Giá nhập (VND)</label>
+                              </div>
+                              <div class="col-md-9 entry_information">
+                                    <input class="form-control" type="number" placeholder="Nhập giá nhập về của sản phẩm" />
+                              </div>
+
+                              <div class="col-md-3 entry_information">
+                                    <label>Số lượng tồn</label>
+                              </div>
+                              <div class="col-md-9 entry_information">
+                                    <input class="form-control" type="number" placeholder="Nhập số lượng có trong kho" />
+                              </div>
+                        </div>
+                  </div>
+                  <div class="modal-footer modal_information">
+                        <button class="btn btn-success">Xong</button>
+                        <button class="btn btn-info">Hủy chỉnh sửa</button>
+                  </div>
+            </div>
+      </div>
+</div>
+<!-- END Modal Edit Item -->
+
+<script>
+      $("#btnAddItem").click(function () {
+            $("#modalAddItem").modal("show");
+      });
+
+      $("#btnEditItem").click(function () {
+            $("#modalEditItem").modal("show");
+      });
+
+      $("#btnEditItem2").click(function () {
+            $("#modalEditItem").modal("show");
+      });
+
+      $("#dashboard").show();
+      $("#itemManager").hide();
+
+      $("#linkDashboard").click(function () {
+            $("#dashboard").show();
+            $("#itemManager").hide();
+      });
+
+      $("#linkItemManager").click(function () {
+            $("#dashboard").hide();
+            $("#itemManager").show();
+      });
+</script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+<script type="text/javascript" src="js/admin_data_visualization.js"></script>
+
+<!-- END ADD BAO-TQ -->
+
+</html>

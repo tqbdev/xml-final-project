@@ -1,0 +1,245 @@
+/* hebrew */
+@font-face {
+  font-family: "Assistant";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Assistant"), local("Assistant-Regular"), url(/fonts/hebrew.woff2) format("woff2");
+  unicode-range: U+0590-05FF, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+
+/* latin */
+@font-face {
+  font-family: "Assistant";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Assistant"), local("Assistant-Regular"), url(/fonts/latin.woff2) format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+.noselect {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+
+body {
+  background: #f4f4f4;
+  position: relative;
+}
+
+.color_navbar {
+  background-color: #34495e;
+}
+
+.custom_header {
+  padding: 10px 20px;
+  display: flex;
+}
+
+.color_footer {
+  background: #34495e;
+  margin: auto;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+.web_body_wraper {
+  margin-top: 20px;
+  position: relative;
+  display: block;
+}
+
+.web_footer_wraper {
+  display: block;
+  position: relative;
+  margin-top: 20px;
+  width: 100%;
+  bottom: 0px;
+}
+
+.instruction-text {
+  position: relative;
+  display: block;
+  font-size: 20px;
+}
+
+.instruction-text-slide {
+  color: #1abc9c;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.entry_information {
+  margin-bottom: 10px;
+}
+
+/* TOP ITEMS */
+
+@media (min-width: 768px) {
+  /* show 3 items */
+  .carousel-inner .active,
+  .carousel-inner .active+.carousel-item,
+  .carousel-inner .active+.carousel-item+.carousel-item,
+  .carousel-inner .active+.carousel-item+.carousel-item+.carousel-item {
+    display: block;
+  }
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left)+.carousel-item,
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left)+.carousel-item+.carousel-item,
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left)+.carousel-item+.carousel-item+.carousel-item {
+    transition: none;
+  }
+  .carousel-inner .carousel-item-next,
+  .carousel-inner .carousel-item-prev {
+    position: relative;
+    transform: translate3d(0, 0, 0);
+  }
+  .carousel-inner .active.carousel-item+.carousel-item+.carousel-item+.carousel-item+.carousel-item {
+    position: absolute;
+    top: 0;
+    right: -25%;
+    z-index: -1;
+    display: block;
+    visibility: visible;
+  }
+  /* left or forward direction */
+  .active.carousel-item-left+.carousel-item-next.carousel-item-left,
+  .carousel-item-next.carousel-item-left+.carousel-item,
+  .carousel-item-next.carousel-item-left+.carousel-item+.carousel-item,
+  .carousel-item-next.carousel-item-left+.carousel-item+.carousel-item+.carousel-item,
+  .carousel-item-next.carousel-item-left+.carousel-item+.carousel-item+.carousel-item+.carousel-item {
+    position: relative;
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+  }
+  /* farthest right hidden item must be abso position for animations */
+  .carousel-inner .carousel-item-prev.carousel-item-right {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    display: block;
+    visibility: visible;
+  }
+  /* right or prev direction */
+  .active.carousel-item-right+.carousel-item-prev.carousel-item-right,
+  .carousel-item-prev.carousel-item-right+.carousel-item,
+  .carousel-item-prev.carousel-item-right+.carousel-item+.carousel-item,
+  .carousel-item-prev.carousel-item-right+.carousel-item+.carousel-item+.carousel-item,
+  .carousel-item-prev.carousel-item-right+.carousel-item+.carousel-item+.carousel-item+.carousel-item {
+    position: relative;
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+    display: block;
+    visibility: visible;
+  }
+}
+
+.next-icon {
+  content: ">";
+  font-size: 55px;
+  color: black;
+}
+
+.prev-icon {
+  content: "<";
+  font-size: 55px;
+  color: black;
+}
+
+#imgResize {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  cursor: pointer;
+}
+
+#imgResize:hover {
+  box-shadow: 0 0 8px #1abc9c;
+}
+
+/* TOP ITEMS */
+
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.myBanners {
+  display: none;
+}
+
+.myBanners img {
+  vertical-align: middle;
+}
+
+.slide-right-left {
+  -webkit-animation-name: righttoleft;
+  -webkit-animation-duration: 1.5s;
+  animation-name: righttoleft;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes righttoleft {
+  100% {
+    transform: translateX(0);
+  }
+  0% {
+    transform: translateX(1000px);
+  }
+}
+
+@keyframes righttoleft {
+  100% {
+    transform: translateX(0);
+  }
+  0% {
+    transform: translateX(1000px);
+  }
+}
+
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+}
+
+/* Position the "next button" to the right */
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+
+.prev:hover,
+.next:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}

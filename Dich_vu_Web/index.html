@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/global_style.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
+
+    <script src="js/common.js"></script>
+    <link rel="shortcut icon" type="image/png" href="resources/imgs/logo.png" />
+    <title>Book Store</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg sticky-top navbar-light color_navbar">
+        <a class="navbar-brand" href="#">
+            <img src="resources/imgs/logo.png" />
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="mr-auto mt-2 mt-lg-0" style="display: flex;">
+                <form class="form-inline">
+                    <input class="form-control mr-sm-2" style="min-width: 300px;" type="search" placeholder="Tìm sản phẩm, nhà xuất bản, ..."
+                        aria-label="Search">
+                    <button class="btn btn-danger my-2 my-sm-0" type="submit">
+                        <i>
+                            <img src="resources/imgs/icons/search.png" />
+                        </i>
+                        <span>Tìm kiếm</span>
+                    </button>
+                </form>
+            </div>
+
+            <div class="navbar-nav my-2 my-lg-0">
+                <div style="display: block; margin: auto 20px;">
+                    <button class="btn btn-primary" id="btnLogin">
+                        <i>
+                            <img src="resources/imgs/icons/user.png" />
+                        </i>
+                        <span>Đăng nhập</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background: lightcyan;">
+        <div class="collapse navbar-collapse container" id="navbarSupportedContent">
+            <div class="mr-auto mt-2 mt-lg-0" style="display: flex;">
+                <button class="btn btn-outline-primary" style="margin: 10px;">Tất cả sản phẩm</button>
+                <button class="btn btn-outline-primary" style="margin: 10px;">Sách tiếng việt</button>
+                <button class="btn btn-outline-primary" style="margin: 10px;">Sách tiếng anh</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="web_body_wraper">
+        <div class="container">
+            <div class="slideshow-container">
+                <div class="myBanners slide-right-left">
+                    <img src="resources/imgs/banners/banner.jpg" style="width:100%">
+                </div>
+                <div class="myBanners slide-right-left">
+                    <img src="resources/imgs/banners/banner2.jpg" style="width:100%">
+                </div>
+                <div class="myBanners slide-right-left">
+                    <img src="resources/imgs/banners/banner3.jpg" style="width:100%">
+                </div>
+                <div class="myBanners slide-right-left">
+                    <img src="resources/imgs/banners/banner4.jpg" style="width:100%">
+                </div>
+                <a class="prev noselect" onclick="plusSlides(-1)">
+                    <span class="prev-icon">❮</span>
+                </a>
+                <a class="next noselect" onclick="plusSlides(1)">
+                    <span class="next-icon">❯</span>
+                </a>
+            </div>
+
+            <div class="instruction-text-slide">Top 10 sản phẩm mới nhất</div>
+            <div id="carouselTopTenNew" class="carousel slide" data-ride="carousel" data-interval="6000" style="margin-top: 20px; margin-bottom: 20px;">
+                <div class="carousel-inner row w-100 mx-auto" role="listbox">
+                    <div class="carousel-item col-md-3 active">
+                        <div id="imgResize">
+                            <img class="img-fluid mx-auto d-block" src="resources/1000369175394.jpg" alt="slide 1">
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div id="imgResize">
+                            <img class="img-fluid mx-auto d-block" src="resources/1000369175394.jpg" alt="slide 1">
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div id="imgResize">
+                            <img class="img-fluid mx-auto d-block" src="resources/1000369175394.jpg" alt="slide 1">
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div id="imgResize">
+                            <img class="img-fluid mx-auto d-block" src="resources/1000369175394.jpg" alt="slide 1">
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div id="imgResize">
+                            <img class="img-fluid mx-auto d-block" src="resources/1000369175394.jpg" alt="slide 1">
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div id="imgResize">
+                            <img class="img-fluid mx-auto d-block" src="resources/1000369175394.jpg" alt="slide 1">
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div id="imgResize">
+                            <img class="img-fluid mx-auto d-block" src="resources/1000369175394.jpg" alt="slide 1">
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div id="imgResize">
+                            <img class="img-fluid mx-auto d-block" src="resources/1000369175394.jpg" alt="slide 1">
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselTopTenNew" role="button" data-slide="prev">
+                    <span class="prev-icon">❮</span>
+                </a>
+                <a class="carousel-control-next text-faded" href="#carouselTopTenNew" role="button" data-slide="next">
+                    <span class="next-icon">❯</span>
+                </a>
+            </div>
+
+            <div class="instruction-text-slide">Top 10 sản phẩm bán chạy nhất</div>
+            <div id="carouselTopTenSale" class="carousel slide" data-ride="carousel" data-interval="6000" style="margin-top: 20px; margin-bottom: 20px;">
+                <div class="carousel-inner row w-100 mx-auto" role="listbox">
+                    <div class="carousel-item col-md-3 active">
+                        <div id="imgResize">
+                            <img class="img-fluid mx-auto d-block" src="resources/1000369175394.jpg" alt="slide 1">
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div id="imgResize">
+                            <img class="img-fluid mx-auto d-block" src="resources/1000369175394.jpg" alt="slide 1">
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div id="imgResize">
+                            <img class="img-fluid mx-auto d-block" src="resources/1000369175394.jpg" alt="slide 1">
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div id="imgResize">
+                            <img class="img-fluid mx-auto d-block" src="resources/1000369175394.jpg" alt="slide 1">
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div id="imgResize">
+                            <img class="img-fluid mx-auto d-block" src="resources/1000369175394.jpg" alt="slide 1">
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div id="imgResize">
+                            <img class="img-fluid mx-auto d-block" src="resources/1000369175394.jpg" alt="slide 1">
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div id="imgResize">
+                            <img class="img-fluid mx-auto d-block" src="resources/1000369175394.jpg" alt="slide 1">
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div id="imgResize">
+                            <img class="img-fluid mx-auto d-block" src="resources/1000369175394.jpg" alt="slide 1">
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselTopTenSale" role="button" data-slide="prev">
+                    <span class="prev-icon">❮</span>
+                </a>
+                <a class="carousel-control-next text-faded" href="#carouselTopTenSale" role="button" data-slide="next">
+                    <span class="next-icon">❯</span>
+                </a>
+            </div>
+
+            <div class="instruction-text-slide">Top 10 sản phẩm xem nhiều nhất</div>
+            <div id="carouselTopTenAccess" class="carousel slide" data-ride="carousel" data-interval="6000" style="margin-top: 20px; margin-bottom: 20px;">
+                <div class="carousel-inner row w-100 mx-auto" role="listbox">
+                    <div class="carousel-item col-md-3 active">
+                        <div id="imgResize">
+                            <img class="img-fluid mx-auto d-block" src="resources/1000369175394.jpg" alt="slide 1">
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div id="imgResize">
+                            <img class="img-fluid mx-auto d-block" src="resources/1000369175394.jpg" alt="slide 1">
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div id="imgResize">
+                            <img class="img-fluid mx-auto d-block" src="resources/1000369175394.jpg" alt="slide 1">
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div id="imgResize">
+                            <img class="img-fluid mx-auto d-block" src="resources/1000369175394.jpg" alt="slide 1">
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div id="imgResize">
+                            <img class="img-fluid mx-auto d-block" src="resources/1000369175394.jpg" alt="slide 1">
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div id="imgResize">
+                            <img class="img-fluid mx-auto d-block" src="resources/1000369175394.jpg" alt="slide 1">
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div id="imgResize">
+                            <img class="img-fluid mx-auto d-block" src="resources/1000369175394.jpg" alt="slide 1">
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div id="imgResize">
+                            <img class="img-fluid mx-auto d-block" src="resources/1000369175394.jpg" alt="slide 1">
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselTopTenAccess" role="button" data-slide="prev">
+                    <span class="prev-icon">❮</span>
+                </a>
+                <a class="carousel-control-next text-faded" href="#carouselTopTenAccess" role="button" data-slide="next">
+                    <span class="next-icon">❯</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div style="clear: both;"></div>
+    <div class="web_footer_wraper">
+        <div class="color_footer">
+            <div>Copyright © 2018. Đây là một sản phẩm của nhóm XML và ứng dụng - CNTT KHTN K2015</div>
+        </div>
+    </div>
+</body>
+
+<!-- BEGIN Modal Login -->
+<div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="float: left; display: flex;">
+                <h4 class="modal-title" style="float: left; display: flex;">
+                    Đăng nhập
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×</button>
+            </div>
+            <div class="modal-body" style="padding: 10%; padding-top: 30px; padding-bottom: 30px;">
+                <form role="form">
+                    <div class="form-group row">
+                        <label for="reEmail" class="col-md-3 control-label">
+                            Tên đăng nhập</label>
+                        <div class="col-md-9">
+                            <input type="email" class="form-control" id="reEmail" placeholder="Tên đăng nhập" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="rePassword" class="col-md-3 control-label">
+                            Mật khẩu</label>
+                        <div class="col-md-9">
+                            <input type="password" class="form-control" id="rePassword" placeholder="Mật khẩu" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="container" style="text-align: right;">
+                            <button type="submit" class="btn btn-primary">
+                                Đăng nhập</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END Modal Login -->
+
+<script>
+    var slideIndex = 0;
+    var timeOut;
+    showSlides();
+
+    function plusSlides(n) {
+        clearTimeout(timeOut);
+        setSlide(slideIndex += n);
+        timeOut = setTimeout(showSlides, 6000);
+    }
+
+    function setSlide(n) {
+        var i;
+        var slides = document.getElementsByClassName("myBanners");
+        if (n > slides.length) {
+            slideIndex = 1
+        }
+        if (n < 1) {
+            slideIndex = slides.length
+        }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+
+        slides[slideIndex - 1].style.display = "block";
+    }
+
+    function showSlides() {
+        var i;
+        var slides = document.getElementsByClassName("myBanners");
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+
+        slideIndex++;
+        if (slideIndex > slides.length) {
+            slideIndex = 1
+        }
+
+        slides[slideIndex - 1].style.display = "block";
+        timeOut = setTimeout(showSlides, 6000);
+    }
+
+    $("#carouselTopTenNew").on("slide.bs.carousel", function (e) {
+        var $e = $(e.relatedTarget);
+        var idx = $e.index();
+        var itemsPerSlide = 4;
+        var totalItems = $("#carouselTopTenNew .carousel-item").length;
+
+        if (idx >= totalItems - (itemsPerSlide - 1)) {
+            var it = itemsPerSlide - (totalItems - idx);
+            for (var i = 0; i < it; i++) {
+                // append slides to end
+                if (e.direction == "left") {
+                    $("#carouselTopTenNew .carousel-item")
+                        .eq(i)
+                        .appendTo("#carouselTopTenNew .carousel-inner");
+                } else {
+                    $("#carouselTopTenNew .carousel-item")
+                        .eq(0)
+                        .appendTo("#carouselTopTenNew .carousel-inner");
+                }
+            }
+        }
+    });
+
+    $("#carouselTopTenSale").on("slide.bs.carousel", function (e) {
+        var $e = $(e.relatedTarget);
+        var idx = $e.index();
+        var itemsPerSlide = 4;
+        var totalItems = $("#carouselTopTenSale .carousel-item").length;
+
+        if (idx >= totalItems - (itemsPerSlide - 1)) {
+            var it = itemsPerSlide - (totalItems - idx);
+            for (var i = 0; i < it; i++) {
+                // append slides to end
+                if (e.direction == "left") {
+                    $("#carouselTopTenSale .carousel-item")
+                        .eq(i)
+                        .appendTo("#carouselTopTenSale .carousel-inner");
+                } else {
+                    $("#carouselTopTenSale .carousel-item")
+                        .eq(0)
+                        .appendTo("#carouselTopTenSale .carousel-inner");
+                }
+            }
+        }
+    });
+
+    $("#carouselTopTenAccess").on("slide.bs.carousel", function (e) {
+        var $e = $(e.relatedTarget);
+        var idx = $e.index();
+        var itemsPerSlide = 4;
+        var totalItems = $("#carouselTopTenAccess .carousel-item").length;
+
+        if (idx >= totalItems - (itemsPerSlide - 1)) {
+            var it = itemsPerSlide - (totalItems - idx);
+            for (var i = 0; i < it; i++) {
+                // append slides to end
+                if (e.direction == "left") {
+                    $("#carouselTopTenAccess .carousel-item")
+                        .eq(i)
+                        .appendTo("#carouselTopTenAccess .carousel-inner");
+                } else {
+                    $("#carouselTopTenAccess .carousel-item")
+                        .eq(0)
+                        .appendTo("#carouselTopTenAccess .carousel-inner");
+                }
+            }
+        }
+    });
+</script>
+
+</html>
