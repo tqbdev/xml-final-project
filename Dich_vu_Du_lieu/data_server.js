@@ -8,10 +8,10 @@ var port = 3002
 
 var session = []
 
-function checkAuth(headers){
+function checkAuth(headers) {
     var uid = headers.uid
-    for(var i = 0; i < session.length; i++){
-        if(uid == session[i]){
+    for (var i = 0; i < session.length; i++) {
+        if (uid == session[i]) {
             return true
         }
     }
@@ -21,32 +21,39 @@ function checkAuth(headers){
 app.createServer((req, res) => {
     console.log(`${req.method} ${req.url}`);
 
-    switch(req.method) {
+    switch (req.method) {
         case 'GET':
             var getMethod = require('./services/getMethod.js')
 
-            switch(req.url){
+            switch (req.url) {
                 case '/CuaHang':
-                    if(checkAuth(req.headers) === true){
-                        res.writeHeader(200, {'Content-Type': 'text/xml'})
-                        var data =  getMethod.get_CuaHang()
+                    if (checkAuth(req.headers) === true) {
+                        res.writeHeader(200, {
+                            'Content-Type': 'text/xml'
+                        })
+                        var data = getMethod.get_CuaHang()
                         res.end(data)
-                    }
-                    else {
-                        res.writeHeader(404, {'Content-Type': 'text/plain'})
+                    } else {
+                        res.writeHeader(404, {
+                            'Content-Type': 'text/plain'
+                        })
                         res.end("Request was not support!!!")
                     }
                     break
 
                 case '/DanhSach_Tivi':
 
-                    res.writeHeader(200, {'Content-Type': 'text/xml'})
+                    res.writeHeader(200, {
+                        'Content-Type': 'text/xml'
+                    })
                     var data = getMethod.get_DanhSach_Tivi()
                     res.end(data)
                     break
 
                 default:
-                    res.writeHeader(404, {'Content-Type': 'text/plain'})
+                    res.writeHeader(404, {
+                        'Content-Type': 'text/plain'
+                    })
                     res.end("Request was not support!!!")
                     break
             }
@@ -56,7 +63,7 @@ app.createServer((req, res) => {
         case 'POST':
             var getMethod = require('./services/getMethod.js')
 
-            switch(req.url){
+            switch (req.url) {
                 case '/login':
                     // console.log(req.headers)
                     // console.log(req.body)
@@ -88,12 +95,16 @@ app.createServer((req, res) => {
 
                     session.push(101)
                     console.log(session)
-                    res.writeHeader(200, {'Content-Type': 'text/plain'})
+                    res.writeHeader(200, {
+                        'Content-Type': 'text/plain'
+                    })
                     res.end('101')
                     break
 
                 default:
-                    res.writeHeader(404, {'Content-Type': 'text/plain'})
+                    res.writeHeader(404, {
+                        'Content-Type': 'text/plain'
+                    })
                     res.end("Request was not support!!!")
                     break
             }
@@ -104,7 +115,7 @@ app.createServer((req, res) => {
             break
     }
 }).listen(port, (err) => {
-    if(err != null)
+    if (err != null)
         console.log('==> Error: ' + err)
     else
         console.log('Server is starting at port ' + port)
