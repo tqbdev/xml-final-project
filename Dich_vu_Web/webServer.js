@@ -1,6 +1,6 @@
 var app = require('http')
 var fs = require('fs')
-var port = 3000
+var PORT = 3000
 
 app.createServer((req, res) => {
     console.log(`${req.method} ${req.url}`);
@@ -9,8 +9,9 @@ app.createServer((req, res) => {
     var req_url = (req.url == '/') ? '/index.html' : req.url
 
     // Xử lý các ứng dụng con
-    req_url = (req.url == '/Nhan_vien_Ban_hang') ? '/MH_Nhan_vien_Ban_hang.html' : req_url
-    req_url = (req.url == '/Quan_ly_Ban_hang') ? '/MH_Quan_ly_Ban_hang.html' : req_url
+    req_url = (req.url.includes('/admin')) ? '/admin_page.html' : req_url
+    req_url = (req.url.includes('/list_product')) ? '/list_product_page.html' : req_url
+    req_url = (req.url.includes('/detail_product')) ? '/detail_product_page.html' : req_url
 
     // Xử lý phần header res sẽ gửi về Client
     var file_extension = req_url.lastIndexOf('.');
@@ -45,9 +46,9 @@ app.createServer((req, res) => {
             console.log(req.url, header_type);
         }
     })
-}).listen(port, (err) => {
+}).listen(PORT, (err) => {
     if (err != null)
         console.log('==> Error: ' + err)
     else
-        console.log('Server is starting at port ' + port)
+        console.log('Server is starting at port ' + PORT)
 })
