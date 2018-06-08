@@ -1,3 +1,5 @@
+'use strict'
+
 var app = require('http')
 var fs = require('fs')
 var PORT = 3000
@@ -16,8 +18,7 @@ app.createServer((req, res) => {
     // Xử lý phần header res sẽ gửi về Client
     var file_extension = req_url.lastIndexOf('.');
     var header_type = (file_extension == -1 && req.url != '/') ?
-        'text/plain' :
-        {
+        'text/plain' : {
             '/': 'text/html',
             '.html': 'text/html',
             '.ico': 'image/x-icon',
