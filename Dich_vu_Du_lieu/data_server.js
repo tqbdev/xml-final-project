@@ -1,21 +1,21 @@
-'use strict'
+'use strict';
 
-var app = require('http')
-var url = require('url')
-var query = require('querystring')
+var app = require('http');
+var url = require('url');
+var query = require('querystring');
 
-var port = 3002
+var PORT = 3002;
 
-var session = []
+var session = [];
 
 function checkAuth(headers) {
-    var uid = headers.uid
+    var uid = headers.uid;
     for (var i = 0; i < session.length; i++) {
         if (uid == session[i]) {
-            return true
+            return true;
         }
     }
-    return false
+    return false;
 }
 
 app.createServer((req, res) => {
@@ -23,45 +23,45 @@ app.createServer((req, res) => {
 
     switch (req.method) {
         case 'GET':
-            var getMethod = require('./services/getMethod.js')
+            var getMethod = require('./services/getMethod.js');
 
             switch (req.url) {
-                case '/CuaHang':
+                case '/Store':
                     if (checkAuth(req.headers) === true) {
                         res.writeHeader(200, {
                             'Content-Type': 'text/xml'
-                        })
-                        var data = getMethod.get_CuaHang()
-                        res.end(data)
+                        });
+                        var data = getMethod.get_CuaHang();
+                        res.end(data);
                     } else {
                         res.writeHeader(404, {
                             'Content-Type': 'text/plain'
-                        })
-                        res.end("Request was not support!!!")
+                        });
+                        res.end("Request was not support!!!");
                     }
                     break
 
-                case '/DanhSach_Tivi':
+                case '/Books':
 
                     res.writeHeader(200, {
                         'Content-Type': 'text/xml'
-                    })
-                    var data = getMethod.get_DanhSach_Tivi()
-                    res.end(data)
-                    break
+                    });
+                    var data = getMethod.get_DanhSach_Tivi();
+                    res.end(data);
+                    break;
 
                 default:
                     res.writeHeader(404, {
                         'Content-Type': 'text/plain'
-                    })
-                    res.end("Request was not support!!!")
-                    break
+                    });
+                    res.end("Request was not support!!!");
+                    break;
             }
 
             console.log('--> Done');
-            break
+            break;
         case 'POST':
-            var getMethod = require('./services/getMethod.js')
+            var getMethod = require('./services/getMethod.js');
 
             switch (req.url) {
                 case '/login':
@@ -70,9 +70,9 @@ app.createServer((req, res) => {
 
                     let body = [];
                     req.on('data', (chunk) => {
-                        body.push(chunk)
+                        body.push(chunk);
                     }).on('end', () => {
-                        body = Buffer.concat(body).toString()
+                        body = Buffer.concat(body).toString();
 
                         // body = body.split('--X-INSOMNIA-BOUNDARY')
                         // console.log(body)
@@ -91,32 +91,32 @@ app.createServer((req, res) => {
                         // var arrString = body.split('--X-INSOMNIA-BOUNDARY\r\nContent-Disposition: form-data;')
                         //
                         // console.log(arrString)
-                    })
+                    });
 
-                    session.push(101)
-                    console.log(session)
+                    session.push(101);
+                    console.log(session);
                     res.writeHeader(200, {
                         'Content-Type': 'text/plain'
-                    })
-                    res.end('101')
-                    break
+                    });
+                    res.end('101');
+                    break;
 
                 default:
                     res.writeHeader(404, {
                         'Content-Type': 'text/plain'
-                    })
-                    res.end("Request was not support!!!")
-                    break
+                    });
+                    res.end("Request was not support!!!");
+                    break;
             }
-            break
+            break;
         case 'PUT':
-            break
+            break;
         case 'DELETE':
-            break
+            break;
     }
-}).listen(port, (err) => {
+}).listen(PORT, (err) => {
     if (err != null)
-        console.log('==> Error: ' + err)
+        console.log('==> Error: ' + err);
     else
-        console.log('Server is starting at port ' + port)
+        console.log('Data server is starting at port ' + PORT);
 })
