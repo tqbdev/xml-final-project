@@ -6,9 +6,10 @@ var query = require('querystring');
 var PORT = 3000;
 
 app.createServer((req, res) => {
-    console.log(`${req.method} ${req.url}`);
+    //console.log(`${req.method} ${req.url}`);
 
     var accept = req.headers.accept;
+    var original_url = req.url;
 
     switch (req.method) {
         case 'GET':
@@ -50,15 +51,43 @@ app.createServer((req, res) => {
                         res.setHeader('Content-type', header_type);
 
                         res.end(data);
-                        console.log(req.url, header_type);
+                        //console.log(req.url, header_type);
                     }
                 });
             } else {
-                // send to bus
-                res.setHeader('Content-type', 'text/xml');
-                res.end("<Data></Data>");
+                // send to data_server
+                const options = {
+                    port: 3001,
+                    method: 'GET',
+                    path: original_url
+                };
 
-                console.log("TEST! OK");
+                var res_string = "";
+                const req = app.request(options, (response) => {
+                    //console.log(`STATUS: ${res.statusCode}`);
+                    //console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+                    response.setEncoding('utf8');
+                    response.on('data', (chunk) => {
+                        res_string += chunk;
+                    });
+                    response.on('end', () => {
+                        res.setHeader('Content-type', 'text/xml');
+                        res.end(res_string);
+                    });
+                });
+
+                req.on('error', (e) => {
+                    console.error(`problem with request: ${e.message}`);
+                });
+
+                // write data to request body
+                // req.write(postData);
+                req.end();
+
+                // res.setHeader('Content-type', 'text/xml');
+                // res.end("<Data></Data>");
+
+                //console.log("TEST! OK");
             }
             break;
         case 'DELETE':

@@ -18,7 +18,6 @@
         crossorigin="anonymous"></script>
 
     <script src="js/common.js"></script>
-    <script src="js/jquery.elevatezoom.js"></script>
 
     <link rel="shortcut icon" type="image/png" href="resources/imgs/logo.png" />
     <title>Book Store</title>
@@ -101,8 +100,7 @@
         <div class="row product_detail_container">
             <!--BEGIN LEFT COLUMN - BIG IMG -->
             <div class="col-md-4  product_image_wraper">
-                <div class="product_image_div">
-                    <img id="product_image" class="product_img" src="resources/1000369175394.jpg" alt="" data-zoom-image="resources/1000369175394.jpg">
+                <div class="product_image_div" id="product_img_div">
                 </div>
             </div>
             <!-- END LEFT COLUMN - BIG IMG -->
@@ -132,84 +130,6 @@
                 </div>
             </div>
             <!-- END RIGHT COLUMN - PRODUCT INFO -->
-        </div>
-        <h3 style="margin: 25px;">Các sản phẩm cùng loại</h3>
-        <div class="row">
-            <div class="col-md-3 product-item">
-                <a>
-                    <span>
-                        <img class="img-fluid" src="resources/1000369175394.jpg" />
-                    </span>
-                    <span class="product-item-title">Title</span>
-                    <h4 class="product-item-price">75.000 đ</h4>
-                </a>
-            </div>
-            <div class="col-md-3 product-item">
-                <a>
-                    <span>
-                        <img class="img-fluid" src="resources/1000369175394.jpg" />
-                    </span>
-                    <span class="product-item-title">Title</span>
-                    <h4 class="product-item-price">75.000 đ</h4>
-                </a>
-            </div>
-            <div class="col-md-3 product-item">
-                <a>
-                    <span>
-                        <img class="img-fluid" src="resources/1000369175394.jpg" />
-                    </span>
-                    <span class="product-item-title">Title</span>
-                    <h4 class="product-item-price">75.000 đ</h4>
-                </a>
-            </div>
-            <div class="col-md-3 product-item">
-                <a>
-                    <span>
-                        <img class="img-fluid" src="resources/1000369175394.jpg" />
-                    </span>
-                    <span class="product-item-title">Title</span>
-                    <h4 class="product-item-price">75.000 đ</h4>
-                </a>
-            </div>
-        </div>
-        <h3 style="margin: 25px;">Các sản phẩm cùng nhà sản xuất</h3>
-        <div class="row">
-            <div class="col-md-3 product-item">
-                <a>
-                    <span>
-                        <img class="img-fluid" src="resources/1000369175394.jpg" />
-                    </span>
-                    <span class="product-item-title">Title</span>
-                    <h4 class="product-item-price">75.000 đ</h4>
-                </a>
-            </div>
-            <div class="col-md-3 product-item">
-                <a>
-                    <span>
-                        <img class="img-fluid" src="resources/1000369175394.jpg" />
-                    </span>
-                    <span class="product-item-title">Title</span>
-                    <h4 class="product-item-price">75.000 đ</h4>
-                </a>
-            </div>
-            <div class="col-md-3 product-item">
-                <a>
-                    <span>
-                        <img class="img-fluid" src="resources/1000369175394.jpg" />
-                    </span>
-                    <span class="product-item-title">Title</span>
-                    <h4 class="product-item-price">75.000 đ</h4>
-                </a>
-            </div>
-            <div class="col-md-3 product-item">
-                <a>
-                    <span>
-                        <img class="img-fluid" src="resources/1000369175394.jpg" />
-                    </span>
-                    <span class="product-item-title">Title</span>
-                    <h4 class="product-item-price">75.000 đ</h4>
-                </a>
-            </div>
         </div>
     </div>
     <div style="clear: both;"></div>
@@ -260,14 +180,9 @@
 </div>
 <!-- END Modal Login -->
 
-<script>
-    $("#product_image").elevateZoom({
-        scrollZoom: true
-    });
-</script>
-
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
+<script src="js/jquery.ez-plus.js"></script>
 <script src="js/js_detail_product.js"></script>
 <script>
     GET_XML_DATA();

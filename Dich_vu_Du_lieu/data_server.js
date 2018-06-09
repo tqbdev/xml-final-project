@@ -3,8 +3,26 @@
 var app = require('http');
 var url = require('url');
 var query = require('querystring');
+var DOMParser = require("xmldom").DOMParser;
+var XMLSerializer = require("xmldom").XMLSerializer;
 
-var PORT = 3002;
+var PORT = 3001;
+
+var HANDLE_DATA = require('./services/HANDLE_DATA.js');
+
+// Loading data
+var GET = require('./services/GET.js');
+var CONVERT = require('./services/CONVERT.js');
+
+console.log("Init data...");
+var VN_Books_XML = GET.Vietnamese_Books();
+var EN_Books_XML = GET.English_Books();
+var ALL_Books_XML = CONVERT.JOIN_2_XML(VN_Books_XML, EN_Books_XML);
+var VN_Books_XML_Little = CONVERT.Convert_2_Little_XML(VN_Books_XML);
+var EN_Books_XML_Little = CONVERT.Convert_2_Little_XML(EN_Books_XML);
+var ALL_Books_XML_Little = CONVERT.JOIN_2_XML_Little(VN_Books_XML_Little, EN_Books_XML_Little);
+
+console.log("Init complete...");
 
 var session = [];
 
@@ -21,11 +39,19 @@ function checkAuth(headers) {
 app.createServer((req, res) => {
     console.log(`${req.method} ${req.url}`);
 
+    var req_url = req.url;
+    var index = req_url.indexOf('?');
+    var req_origin = req_url.substring(0, index);
+    var querystring = req_url.substring(index + 1);
+    var args = query.parse(querystring);
+    //console.log(args);
+
+
     switch (req.method) {
         case 'GET':
-            var getMethod = require('./services/getMethod.js');
+            var getMethod = require('./services/GET.js');
 
-            switch (req.url) {
+            switch (req_origin) {
                 case '/Store':
                     if (checkAuth(req.headers) === true) {
                         res.writeHeader(200, {
@@ -39,14 +65,39 @@ app.createServer((req, res) => {
                         });
                         res.end("Request was not support!!!");
                     }
-                    break
+                    break;
 
-                case '/Books':
-
+                case '/list_product':
                     res.writeHeader(200, {
                         'Content-Type': 'text/xml'
                     });
-                    var data = getMethod.get_DanhSach_Tivi();
+
+                    var data = null;
+
+                    switch (args.p) {
+                        case 'all':
+                            data = new XMLSerializer().serializeToString(ALL_Books_XML_Little);
+                            break;
+                        case 'vietnamese':
+                            data = new XMLSerializer().serializeToString(VN_Books_XML_Little);
+                            break;
+                        case 'english':
+                            data = new XMLSerializer().serializeToString(EN_Books_XML_Little);
+                            break;
+                    }
+
+                    res.end(data);
+                    break;
+
+                case '/detail_product':
+                    res.writeHeader(200, {
+                        'Content-Type': 'text/xml'
+                    });
+
+                    var sku = args.p;
+
+                    var data = new XMLSerializer().serializeToString(HANDLE_DATA.Find_Book(ALL_Books_XML, sku));
+                    
                     res.end(data);
                     break;
 
