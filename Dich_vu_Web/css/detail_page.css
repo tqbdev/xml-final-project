@@ -107,8 +107,8 @@
     font-size: 20px;
 }
 
-.product_rating {
-    width: 50%;
+.product_more {
+    width: 60%;
     margin-left: -3px !important;
     padding: 5px 0 5px 20px;
     box-shadow: 1px 0 5px #b2bec3;
@@ -125,6 +125,18 @@
     margin: auto;
     font-size: 20px;
     color: white;
+}
+
+.product_sku {
+    width: 50%;
+    margin-top: 20px;
+    background: #1abc9c;
+    padding: 5px 0px 5px 20px;
+    color: white;
+    margin-left: -3px;
+    font-size: 20px;
+    border-radius: 3px 20px 20px 3px;
+    box-shadow: 1px 0 5px #b2bec3;
 }
 
 ::-webkit-scrollbar {

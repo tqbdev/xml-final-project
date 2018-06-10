@@ -1,8 +1,9 @@
 "use strict";
 
 $(document).ready(function () {
-  $("#btnLogin").click(function () {
-    $("#modalLogin").modal("show");
+  $("#login").click(function () {
+    //$("#modalLogin").modal("show");
+    window.location.href = document.location.origin + "/login";
   });
 
   $("#href_home").click(function () {

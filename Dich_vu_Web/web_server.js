@@ -6,7 +6,7 @@ var query = require('querystring');
 var PORT = 3000;
 
 app.createServer((req, res) => {
-    //console.log(`${req.method} ${req.url}`);
+    console.log(`${req.method} ${req.url}`);
 
     var accept = req.headers.accept;
     var original_url = req.url;
@@ -20,7 +20,9 @@ app.createServer((req, res) => {
                 // Xử lý các ứng dụng con
                 req_url = (req.url.includes('/admin')) ? '/admin_page.html' : req_url;
                 req_url = (req.url.includes('/list_product')) ? '/list_product_page.html' : req_url;
+                req_url = (req.url.includes('/search')) ? '/list_product_page.html' : req_url;
                 req_url = (req.url.includes('/detail_product')) ? '/detail_product_page.html' : req_url;
+                req_url = (req.url.includes('/login')) ? '/login_page.html' : req_url;
 
                 // Xử lý phần header res sẽ gửi về Client
                 var file_extension = req_url.lastIndexOf('.');

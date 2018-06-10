@@ -52,6 +52,9 @@ $(document).ajaxComplete(function () {
       $("#remain_count").empty(); 
       $("#remain_count").html("Kho còn: " + remain_amount);
 
+      $("#sku_product").empty(); 
+      $("#sku_product").html("SKU code: " + SKU);
+
       $("#product_img_div").empty();
 
       var img = `<img id="product_image" class="product_img" src="resources/${SKU}.jpg" alt="" data-zoom-image="resources/${SKU}.jpg">`

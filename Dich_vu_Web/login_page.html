@@ -5,7 +5,8 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <link rel="stylesheet" href="css/global_style.css">
+      <link rel="shortcut icon" type="image/png" href="resources/imgs/logo.png" />
+      <title>Book Store</title>
 
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
             crossorigin="anonymous">
@@ -16,36 +17,59 @@
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
             crossorigin="anonymous"></script>
 
+      <link rel="stylesheet" href="css/global_style.css">
       <script src="js/common.js"></script>
-
-      <link rel="shortcut icon" type="image/png" href="resources/imgs/logo.png" />
-      <title>Book Store</title>
 </head>
+
 <style>
-      .product-item {
-            display: block;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            padding-left: 25px;
-            padding-right: 25px;
-            border: 1px solid transparent;
+      .login-page {
+            width: 360px;
+            padding: 8% 0 0;
+            margin: auto;
+      }
+
+      .form-cus {
             position: relative;
-            max-width: 100%;
-            box-shadow: initial;
+            z-index: 1;
+            background: #FFFFFF;
+            max-width: 360px;
+            margin: 0 auto 100px;
+            padding: 45px;
+            text-align: center;
+            box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
       }
 
-      .product-item:hover {
-            /* outline: 3px solid black;  */
-            box-shadow: 0 0 20px rgba(0, 0, 0, .3);
+      .form-cus input {
+            font-family: sans-serif;
+            outline: 0;
+            background: #f2f2f2;
+            width: 100%;
+            border: 0;
+            margin: 0 0 15px;
+            padding: 15px;
+            box-sizing: border-box;
+            font-size: 14px;
       }
 
-      .product-item-title {
-            font-size: 16px;
-            color: black;
+      .form-cus button {
+            font-family: sans-serif;
+            text-transform: uppercase;
+            outline: 0;
+            background: #34495e;
+            width: 100%;
+            border: 0;
+            padding: 15px;
+            color: #FFFFFF;
+            font-size: 14px;
+            -webkit-transition: all 0.3 ease;
+            transition: all 0.3 ease;
+            cursor: pointer;
       }
 
-      .product-item-price {
-            color: orange;
+      .form-cus button:hover,
+      .form-cus button:active,
+      .form-cus button:focus {
+            background: #ff6c20;
       }
 </style>
 
@@ -62,25 +86,13 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                   <div class="mr-auto mt-2 mt-lg-0" style="display: flex;">
                         <div class="form-inline">
-                              <input class="form-control mr-sm-2" style="min-width: 300px;" type="search" placeholder="Tìm sản phẩm..."
-                                    aria-label="Search">
+                              <input class="form-control mr-sm-2" style="min-width: 300px;" type="search" placeholder="Tìm sản phẩm..." aria-label="Search">
                               <button class="btn btn-danger my-2 my-sm-0">
                                     <!-- <i>
-                                          <img src="resources/imgs/icons/search.png" />
-                                    </i> -->
+                                            <img src="resources/imgs/icons/search.png" />
+                                        </i> -->
                                     <span>Tìm kiếm</span>
                               </button>
-                        </div>
-                  </div>
-
-                  <div class="navbar-nav my-2 my-lg-0">
-                        <div style="display: block; margin: auto 20px;">
-                              <a class="btn btn-primary" id="login">
-                                    <i>
-                                          <img src="resources/imgs/icons/user.png" />
-                                    </i>
-                                    <span style="color: #fff; font-size: 16px;">Đăng nhập</span>
-                              </a>
                         </div>
                   </div>
             </div>
@@ -94,10 +106,12 @@
                   </div>
             </div>
       </nav>
-
-      <div class="web_body_wraper">
-            <div class="container">
-                  <div class="row" style="background: #fff;" id="list_product">
+      <div class="login-page">
+            <div class="form-cus">
+                  <div class="login-form">
+                        <input type="text" placeholder="username" />
+                        <input type="password" placeholder="password" />
+                        <button>login</button>
                   </div>
             </div>
       </div>
@@ -108,12 +122,5 @@
             </div>
       </div>
 </body>
-
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-<script src="js/js_list_product.js"></script>
-<script>
-      GET_XML_DATA();
-</script>
 
 </html>
