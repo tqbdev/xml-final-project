@@ -1,0 +1,16 @@
+{
+      "Authencation": [
+            {
+                  "username": "admin",
+                  "password": "f429ec54f354b72bed77a5c0afedecb91f347f479a09f74f4107592764b56d1c"
+            },
+            {
+                  "username": "nv1",
+                  "password": "d1fe9035af38e347656b1a13103092fe0e85d2f8f77a5c1adf34645695e38fa6"
+            },
+            {
+                  "username": "nv2",
+                  "password": "c72723566f6a2b50233cc4fb8baef805760a1cf1fb749e4ba3c42b2d4646f9c2"
+            }
+      ]
+}

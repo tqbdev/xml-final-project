@@ -1,24 +1,32 @@
 "use strict";
 
-$(document).ready(function() {
-  $("#login").click(function() {
+$(document).ready(function () {
+  $("#login").click(function () {
     //$("#modalLogin").modal("show");
     window.location.href = document.location.origin + "/login";
   });
 
-  $("#btn_search").click(function() {
-    window.location.href =
-      document.location.origin + "/search?q=" + $("#query_input").val();
-  });
-
-  $("#query_input").keypress(function(event) {
-    if (event.which == 13) {
+  $("#btn_search").click(function () {
+    if ($("#query_input").val().trim() == "") {
+      alert("Query string cannot be empty");
+    } else {
       window.location.href =
         document.location.origin + "/search?q=" + $("#query_input").val();
     }
   });
 
-  $("#href_home").click(function() {
+  $("#query_input").keypress(function (event) {
+    if (event.which == 13) {
+      if ($("#query_input").val().trim() == "") {
+        alert("Query string cannot be empty");
+      } else {
+        window.location.href =
+          document.location.origin + "/search?q=" + $("#query_input").val();
+      }
+    }
+  });
+
+  $("#href_home").click(function () {
     window.location.href = document.location.origin;
   });
 
@@ -36,16 +44,16 @@ $(document).ready(function() {
     $("#query_input").val(decodeURIComponent(query_string));
   }
 
-  $("#all_product").click(function() {
+  $("#all_product").click(function () {
     window.location.href = document.location.origin + "/list_product?p=all";
   });
 
-  $("#vietnamese_product").click(function() {
+  $("#vietnamese_product").click(function () {
     window.location.href =
       document.location.origin + "/list_product?p=vietnamese";
   });
 
-  $("#english_product").click(function() {
+  $("#english_product").click(function () {
     window.location.href = document.location.origin + "/list_product?p=english";
   });
 });

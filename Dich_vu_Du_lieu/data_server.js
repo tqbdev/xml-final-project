@@ -5,6 +5,7 @@ var url = require('url');
 var query = require('querystring');
 var DOMParser = require("xmldom").DOMParser;
 var XMLSerializer = require("xmldom").XMLSerializer;
+var crypto = require('crypto');
 
 var PORT = 3001;
 
@@ -21,6 +22,8 @@ var ALL_Books_XML = CONVERT.JOIN_2_XML(VN_Books_XML, EN_Books_XML);
 var VN_Books_XML_Little = CONVERT.Convert_2_Little_XML(VN_Books_XML);
 var EN_Books_XML_Little = CONVERT.Convert_2_Little_XML(EN_Books_XML);
 var ALL_Books_XML_Little = CONVERT.JOIN_2_XML_Little(VN_Books_XML_Little, EN_Books_XML_Little);
+
+var authencation_data = GET.Authencation_Data();
 
 var array_All_books = CONVERT.Convert_2_Array_Object(ALL_Books_XML);
 var sortByPublish = array_All_books.sort(function (a, b) {
@@ -43,6 +46,19 @@ var sortByView = array_All_books.sort(function (a, b) {
 
 console.log("Init complete...");
 
+try {
+    var JWT = require('./services/JWT.js');
+    var secret = Buffer.from('fe1a1915a379f3be5394b64d14794932', 'hex');
+    var token = JWT.encode({
+        'test': 'test'
+    }, secret);
+    var secret = Buffer.from('fe1a1915a379f3be5394b64d14794931', 'hex');
+    var decoded = JWT.decode(token, secret);
+    console.log(token);
+    console.log(decoded);
+} catch (err) {
+    console.log(err.message);
+}
 var session = [];
 
 function checkAuth(headers) {
@@ -61,11 +77,8 @@ app.createServer((req, res) => {
     var req_url = req.url;
     var index = req_url.indexOf('?');
     var req_origin = (index == -1) ? req_url : req_url.substring(0, index);
-    //var req_origin = req_url.substring(0, index);
     var querystring = req_url.substring(index + 1);
     var args = query.parse(querystring);
-    //console.log(args);
-
 
     switch (req.method) {
         case 'GET':
@@ -140,7 +153,7 @@ app.createServer((req, res) => {
 
                     var queryName = args.q;
                     data = new XMLSerializer().serializeToString(HANDLE_DATA.Find_Book(ALL_Books_XML, queryName));
-                    
+
                     res.end(data);
                     break;
 
@@ -155,40 +168,18 @@ app.createServer((req, res) => {
             console.log('--> Done');
             break;
         case 'POST':
-            var getMethod = require('./services/getMethod.js');
-
             switch (req.url) {
                 case '/login':
-                    // console.log(req.headers)
-                    // console.log(req.body)
+                    var username = req.headers.username;
+                    var password = req.headers.password;
 
-                    let body = [];
-                    req.on('data', (chunk) => {
-                        body.push(chunk);
-                    }).on('end', () => {
-                        body = Buffer.concat(body).toString();
+                    var auth = crypto.createHmac('sha256', username).update(password).digest('hex');
+                    if (authencation_data[username] == auth) {
+                        console.log("OK");
+                    } else {
+                        console.log("ERR");
+                    }
 
-                        // body = body.split('--X-INSOMNIA-BOUNDARY')
-                        // console.log(body)
-                        // body.splice(0,0)
-                        // body.splice(body.size, 1)
-
-
-
-                        // var reg = /--X-INSOMNIA-BOUNDARY/gi
-                        // body = body.replace(reg,'|')
-                        // reg = /Content-Disposition: form-data;/gi
-                        // body = body.replace(reg,'|')
-                        // reg = /(\\r\\n\\r)/gi
-                        // body = body.replace(reg,'&')
-                        // console.log(body)
-                        // var arrString = body.split('--X-INSOMNIA-BOUNDARY\r\nContent-Disposition: form-data;')
-                        //
-                        // console.log(arrString)
-                    });
-
-                    session.push(101);
-                    console.log(session);
                     res.writeHeader(200, {
                         'Content-Type': 'text/plain'
                     });
@@ -204,6 +195,10 @@ app.createServer((req, res) => {
             }
             break;
         case 'PUT':
+            res.writeHeader(404, {
+                'Content-Type': 'text/plain'
+            });
+            res.end("Request was not support!!!");
             break;
         case 'DELETE':
             break;
@@ -213,4 +208,4 @@ app.createServer((req, res) => {
         console.log('==> Error: ' + err);
     else
         console.log('Data server is starting at port ' + PORT);
-})
+});

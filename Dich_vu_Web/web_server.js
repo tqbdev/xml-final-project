@@ -8,6 +8,7 @@ var PORT = 3000;
 app.createServer((req, res) => {
     console.log(`${req.method} ${req.url}`);
 
+    var headers = req.headers;
     var accept = req.headers.accept;
     var original_url = req.url;
 
@@ -15,14 +16,18 @@ app.createServer((req, res) => {
         case 'GET':
             if (!accept.includes("text/xml")) {
                 // Xử lý nếu req chỉ '/' thì load nội dung file index.html
-                var req_url = (req.url == '/') ? '/index.html' : req.url;
+                if (accept.includes("html")) {
+                    var req_url = (req.url == '/') ? '/index.html' : req.url;
 
-                // Xử lý các ứng dụng con
-                req_url = (req.url.includes('/admin')) ? '/admin_page.html' : req_url;
-                req_url = (req.url.includes('/list_product')) ? '/list_product_page.html' : req_url;
-                req_url = (req.url.includes('/search')) ? '/list_product_page.html' : req_url;
-                req_url = (req.url.includes('/detail_product')) ? '/detail_product_page.html' : req_url;
-                req_url = (req.url.includes('/login')) ? '/login_page.html' : req_url;
+                    // Xử lý các ứng dụng con
+                    req_url = (req.url.includes('/admin')) ? '/admin_page.html' : req_url;
+                    req_url = (req.url.includes('/list_product')) ? '/list_product_page.html' : req_url;
+                    req_url = (req.url.includes('/search')) ? '/list_product_page.html' : req_url;
+                    req_url = (req.url.includes('/detail_product')) ? '/detail_product_page.html' : req_url;
+                    req_url = (req.url.includes('/login')) ? '/login_page.html' : req_url;
+                } else {
+                    var req_url = req.url;
+                }
 
                 // Xử lý phần header res sẽ gửi về Client
                 var file_extension = req_url.lastIndexOf('.');
@@ -66,7 +71,7 @@ app.createServer((req, res) => {
                 };
 
                 var res_string = "";
-                const req = app.request(options, (response) => {
+                const request = app.request(options, (response) => {
                     //console.log(`STATUS: ${res.statusCode}`);
                     //console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
                     response.setEncoding('utf8');
@@ -79,13 +84,13 @@ app.createServer((req, res) => {
                     });
                 });
 
-                req.on('error', (e) => {
+                request.on('error', (e) => {
                     console.error(`problem with request: ${e.message}`);
                 });
 
                 // write data to request body
                 // req.write(postData);
-                req.end();
+                request.end();
 
                 // res.setHeader('Content-type', 'text/xml');
                 // res.end("<Data></Data>");
@@ -96,6 +101,35 @@ app.createServer((req, res) => {
         case 'DELETE':
             break;
         case 'POST':
+            console.log(headers);
+
+            const options = {
+                port: 3001,
+                method: 'POST',
+                path: original_url,
+                headers: {
+                    username: headers.username,
+                    password: headers.password
+                }
+            };
+
+            var res_string = "";
+            const request = app.request(options, (response) => {
+                response.setEncoding('utf8');
+                response.on('data', (chunk) => {
+                    res_string += chunk;
+                });
+                response.on('end', () => {
+                    res.setHeader('Content-type', 'text/xml');
+                    res.end(res_string);
+                });
+            });
+
+            request.on('error', (e) => {
+                console.error(`problem with request: ${e.message}`);
+            });
+
+            request.end();
             break;
         case 'PUT':
             // ignore
@@ -106,4 +140,4 @@ app.createServer((req, res) => {
         console.log('==> Error: ' + err);
     else
         console.log('Server is starting at port ' + PORT);
-})
+});

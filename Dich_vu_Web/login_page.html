@@ -86,7 +86,8 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                   <div class="mr-auto mt-2 mt-lg-0" style="display: flex;">
                         <div class="form-inline">
-                              <input class="form-control mr-sm-2" style="min-width: 300px;" type="search" placeholder="Tìm sản phẩm..." aria-label="Search" id="query_input">
+                              <input class="form-control mr-sm-2" style="min-width: 300px;" type="search" placeholder="Tìm sản phẩm..." aria-label="Search"
+                                    id="query_input">
                               <button class="btn btn-danger my-2 my-sm-0" id="btn_search">
                                     <!-- <i>
                                             <img src="resources/imgs/icons/search.png" />
@@ -109,9 +110,9 @@
       <div class="login-page">
             <div class="form-cus">
                   <div class="login-form">
-                        <input type="text" placeholder="username" />
-                        <input type="password" placeholder="password" />
-                        <button>login</button>
+                        <input type="text" placeholder="username" id="input_username" />
+                        <input type="password" placeholder="password" id="input_password" />
+                        <button id="btn_login">login</button>
                   </div>
             </div>
       </div>
@@ -122,5 +123,9 @@
             </div>
       </div>
 </body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
+<script src="js/login.js"></script>
 
 </html>
