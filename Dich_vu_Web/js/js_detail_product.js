@@ -23,6 +23,35 @@ $(document).ajaxComplete(function () {
       //console.log(XML_DATA);
       var book = XML_DATA.getElementsByTagName("Sach")[0];
       var SKU = book.getAttribute("SKU");
+      var name = book.getAttribute("Ten");
+      var author = book.getAttribute("Tac_gia");
+      var remain_amount = book.getAttribute("So_luong_ton");
+      var price = book.getAttribute("Gia_ban");
+      var view_count = book.getAttribute("Luot_xem");
+      var type = book.getAttribute("Loai");
+      var manufactorer = book.getAttribute("NXB");
+
+      $("#name_product").empty();
+      $("#name_product").html(name);
+
+      $("#price_product").empty();
+      $("#price_product").html(Convert_Price_String(price) + " đ");   
+
+      $("#type_product").empty();
+      $("#type_product").html(type);
+
+      $("#manufactorer_product").empty(); 
+      $("#manufactorer_product").html(manufactorer);
+
+      $("#author_product").empty(); 
+      $("#author_product").html("Tác giả: " + author);
+
+      $("#view_count").empty(); 
+      $("#view_count").html("Lượt xem: " + view_count);
+
+      $("#remain_count").empty(); 
+      $("#remain_count").html("Kho còn: " + remain_amount);
+
       $("#product_img_div").empty();
 
       var img = `<img id="product_image" class="product_img" src="resources/${SKU}.jpg" alt="" data-zoom-image="resources/${SKU}.jpg">`

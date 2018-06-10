@@ -43,7 +43,7 @@ $(document).ajaxComplete(function () {
                         <img class="img-fluid" src="resources/${SKU}.jpg" />
                   </span>
                   <span class="product-item-title">${name}</span>
-                  <h4 class="product-item-price">${price} đ</h4>
+                  <h4 class="product-item-price">${Convert_Price_String(price)} đ</h4>
             </a>
             </div>`
 

@@ -30,3 +30,16 @@ $(document).ready(function () {
     window.location.href = document.location.origin + "/list_product?p=english";
   });
 });
+
+const numberWithCommas = (x) => {
+  var parts = x.toString().split(".");
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return parts.join(".");
+}
+
+function Convert_Price_String(price_string) {
+  // var arr = price_string.split("");
+  // arr.reverse();
+
+  return numberWithCommas(price_string);
+}

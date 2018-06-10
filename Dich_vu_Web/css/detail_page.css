@@ -3,13 +3,15 @@
     margin-right: 3%;
     background: #f4f4f4;
 }
+
 .product_detail_container {
     position: relative;
-    margin-left: 0px!important;
-    margin-right: 0px!important;  
+    margin-left: 0px !important;
+    margin-right: 0px !important;
 }
 
 /* BEGIN LEFT COLUMN */
+
 .product_image_div {
     padding-top: 15px;
     padding-bottom: 15px;
@@ -21,24 +23,28 @@
     max-width: 100%;
     height: auto;
     position: relative;
-    box-shadow: 0 0 5px #b2bec3;    
+    box-shadow: 0 0 5px #b2bec3;
 }
+
 .product_image_wraper {
-   padding-left: 15px!important;
-   padding-right: 0!important;
+    padding-left: 15px !important;
+    padding-right: 0 !important;
 }
+
 /* END LEFT COLUMN */
 
 /* BEGIN RIGHT COLUMN */
+
 .info_box {
-    box-shadow: 0 0 5px #b2bec3;  
+    box-shadow: 0 0 5px #b2bec3;
 }
+
 .product_info_wraper {
     /* padding: 0!important; */
     padding-top: 15px;
     padding-bottom: 10px;
-   
 }
+
 .general_info_container {
     position: relative;
     border: 1px solid #b2bec3;
@@ -46,6 +52,7 @@
     padding-bottom: 20px;
     background: white;
 }
+
 .product_name {
     width: 95%;
     background: #1abc9c;
@@ -53,22 +60,25 @@
     color: white;
     margin-left: -3px;
     font-size: 20px;
-    border-radius: 3px 20px 20px 3px;    
-    box-shadow: 1px 0 5px #b2bec3;    
+    border-radius: 3px 20px 20px 3px;
+    box-shadow: 1px 0 5px #b2bec3;
 }
+
 .product_price {
     padding: 5px 0px 5px 20px;
     font-size: 30px;
     color: red;
-    }
+}
+
 .product_origin_info {
-    width: 70%;
-    margin-left:-3px !important;
+    width: 90%;
+    margin-left: -3px !important;
     box-shadow: 1px 0 5px #b2bec3;
     background: #1abc9c;
     border-radius: 3px 20px 20px 3px;
     margin-bottom: 20px;
 }
+
 .product_producer_info {
     width: 40%;
     padding: 5px 15px 5px 20px;
@@ -77,8 +87,8 @@
     background: #1abc9c;
     border: 1px solid white;
     border-style: none solid none none;
-    cursor: pointer;
 }
+
 .product_type_info {
     width: 30%;
     padding: 5px 15px 5px 20px;
@@ -88,38 +98,38 @@
     border: 1px solid white;
     border-style: none solid none none;
     border-radius: 3px 0px 0px 3px;
-    cursor: pointer;
 }
-.product_country_info {
+
+.product_author_info {
     width: 30%;
     padding: 5px 0px 5px 30px;
     color: white;
     font-size: 20px;
-    cursor: pointer;    
 }
-.product_producer_info a, .product_type_info a, .product_country_info a{
-    text-decoration: none;
-    color: white;
-}
+
 .product_rating {
     width: 50%;
-    margin-left:-3px !important;
+    margin-left: -3px !important;
     padding: 5px 0 5px 20px;
     box-shadow: 1px 0 5px #b2bec3;
     background: #1abc9c;
     border-radius: 3px 20px 20px 3px;
 }
+
 .product_viewed {
     font-size: 20px;
     color: white;
-   
 }
-.product_sold {
+
+.product_remain {
     margin: auto;
     font-size: 20px;
     color: white;
 }
+
 ::-webkit-scrollbar {
-    width: 0px;  /* remove scrollbar space */
-    background: transparent;  /* optional: just make scrollbar invisible */
+    width: 0px;
+    /* remove scrollbar space */
+    background: transparent;
+    /* optional: just make scrollbar invisible */
 }
