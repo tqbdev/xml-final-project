@@ -22,6 +22,25 @@ var VN_Books_XML_Little = CONVERT.Convert_2_Little_XML(VN_Books_XML);
 var EN_Books_XML_Little = CONVERT.Convert_2_Little_XML(EN_Books_XML);
 var ALL_Books_XML_Little = CONVERT.JOIN_2_XML_Little(VN_Books_XML_Little, EN_Books_XML_Little);
 
+var array_All_books = CONVERT.Convert_2_Array_Object(ALL_Books_XML);
+var sortByPublish = array_All_books.sort(function (a, b) {
+    var dateA = "01/" + a.getpulish_date;
+    dateA = dateA.replace("-", "/");
+    dateA = Date.parse(dateA);
+    var dateB = "01/" + b.getpulish_date;
+    dateB = dateB.replace("-", "/");
+    dateB = Date.parse(dateB);
+
+
+    return dateB - dateA;
+});
+var sortByView = array_All_books.sort(function (a, b) {
+    var viewedA = parseInt(a.getviewed);
+    var viewedB = parseInt(b.getviewed);
+
+    return viewedB - viewedA;
+});
+
 console.log("Init complete...");
 
 var session = [];
@@ -41,7 +60,8 @@ app.createServer((req, res) => {
 
     var req_url = req.url;
     var index = req_url.indexOf('?');
-    var req_origin = req_url.substring(0, index);
+    var req_origin = (index == -1) ? req_url : req_url.substring(0, index);
+    //var req_origin = req_url.substring(0, index);
     var querystring = req_url.substring(index + 1);
     var args = query.parse(querystring);
     //console.log(args);
@@ -65,6 +85,16 @@ app.createServer((req, res) => {
                         });
                         res.end("Request was not support!!!");
                     }
+                    break;
+
+                case '/index':
+                    res.writeHeader(200, {
+                        'Content-Type': 'text/xml'
+                    });
+
+                    var data = "<Danh_sach></Danh_sach>"
+
+                    res.end(data);
                     break;
 
                 case '/list_product':
@@ -96,7 +126,20 @@ app.createServer((req, res) => {
 
                     var sku = args.p;
 
-                    var data = new XMLSerializer().serializeToString(HANDLE_DATA.Find_Book(ALL_Books_XML, sku));
+                    var data = new XMLSerializer().serializeToString(HANDLE_DATA.Get_Book(ALL_Books_XML, sku));
+
+                    res.end(data);
+                    break;
+
+                case '/search':
+                    res.writeHeader(200, {
+                        'Content-Type': 'text/xml'
+                    });
+
+                    var data = null;
+
+                    var queryName = args.q;
+                    data = new XMLSerializer().serializeToString(HANDLE_DATA.Find_Book(ALL_Books_XML, queryName));
                     
                     res.end(data);
                     break;

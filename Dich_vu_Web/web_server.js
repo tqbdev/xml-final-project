@@ -58,6 +58,7 @@ app.createServer((req, res) => {
                 });
             } else {
                 // send to data_server
+                original_url = (original_url == '/') ? '/index' : original_url;
                 const options = {
                     port: 3001,
                     method: 'GET',

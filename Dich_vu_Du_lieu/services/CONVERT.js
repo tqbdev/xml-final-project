@@ -1,5 +1,6 @@
 var DOMParser = require("xmldom").DOMParser;
 var XMLSerializer = require("xmldom").XMLSerializer;
+var Book = require("../objects/book.js");
 var xpathSelect = require("xpath.js");
 
 class CONVERT {
@@ -107,6 +108,33 @@ class CONVERT {
             }
 
             return result_xml;
+      }
+
+      Convert_2_Array_Object(xml_data) {
+            var book_array = [];
+
+            var books = xml_data.getElementsByTagName("Sach");
+            
+            for (var i = 0; i < books.length; i++) {
+                  var book = books.item(i);
+
+                  var SKU = book.getAttribute("SKU");
+                  var name = book.getAttribute("Ten");
+                  var manufactorer = book.getAttribute("NXB");
+                  var author = book.getAttribute("Tac_gia");
+                  var price = book.getAttribute("Gia_ban");
+                  var viewed = book.getAttribute("Luot_xem");
+                  var pulish_date = book.getAttribute("Ngay_phat_hanh");
+                  var remain_count = book.getAttribute("So_luong_ton");
+                  var price_import = book.getAttribute("Gia_nhap");
+                  var type = book.getAttribute("Loai");
+
+                  var book_object = new Book(SKU, name, manufactorer, author, price,
+                        viewed, pulish_date, remain_count, price_import, type);
+                  book_array.push(book_object);
+            }
+
+            return book_array;
       }
 }
 
