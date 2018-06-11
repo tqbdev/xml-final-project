@@ -46,30 +46,9 @@ var sortByView = array_All_books.sort(function (a, b) {
 
 console.log("Init complete...");
 
-try {
-    var JWT = require('./services/JWT.js');
-    var secret = Buffer.from('fe1a1915a379f3be5394b64d14794932', 'hex');
-    var token = JWT.encode({
-        'test': 'test'
-    }, secret);
-    var secret = Buffer.from('fe1a1915a379f3be5394b64d14794931', 'hex');
-    var decoded = JWT.decode(token, secret);
-    console.log(token);
-    console.log(decoded);
-} catch (err) {
-    console.log(err.message);
-}
-var session = [];
-
-function checkAuth(headers) {
-    var uid = headers.uid;
-    for (var i = 0; i < session.length; i++) {
-        if (uid == session[i]) {
-            return true;
-        }
-    }
-    return false;
-}
+// JWT
+var secret = Buffer.from('875bb9f6a445e07ce32ad9d0f39dce4f89143075d56f3ecb56de705c834dce22', 'hex');
+var JWT = require('./services/JWT.js');
 
 app.createServer((req, res) => {
     console.log(`${req.method} ${req.url}`);
@@ -174,8 +153,11 @@ app.createServer((req, res) => {
                     var password = req.headers.password;
 
                     var auth = crypto.createHmac('sha256', username).update(password).digest('hex');
+                    var token = null;
                     if (authencation_data[username] == auth) {
-                        console.log("OK");
+                        token = JWT.encode({
+                            exp: Date.now() / 1000 + 3600
+                        }, secret);
                     } else {
                         console.log("ERR");
                     }
@@ -183,8 +165,24 @@ app.createServer((req, res) => {
                     res.writeHeader(200, {
                         'Content-Type': 'text/plain'
                     });
-                    res.end('101');
+                    res.end(token);
                     break;
+
+                case '/admin':
+                    var token_key = req.headers.token;
+
+                    var data = null;
+                    try {
+                        var decoded = JWT.decode(token_key, secret);
+                        data = "OK";
+                    } catch (err) {
+                        data = err.message;
+                    }
+
+                    res.writeHeader(200, {
+                        'Content-Type': 'text/plain'
+                    });
+                    res.end(data);
 
                 default:
                     res.writeHeader(404, {

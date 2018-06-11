@@ -20,7 +20,7 @@ app.createServer((req, res) => {
                     var req_url = (req.url == '/') ? '/index.html' : req.url;
 
                     // Xử lý các ứng dụng con
-                    req_url = (req.url.includes('/admin')) ? '/admin_page.html' : req_url;
+                    req_url = (req.url.includes('/admin')) ? '/admin_load.html' : req_url;
                     req_url = (req.url.includes('/list_product')) ? '/list_product_page.html' : req_url;
                     req_url = (req.url.includes('/search')) ? '/list_product_page.html' : req_url;
                     req_url = (req.url.includes('/detail_product')) ? '/detail_product_page.html' : req_url;
@@ -101,35 +101,94 @@ app.createServer((req, res) => {
         case 'DELETE':
             break;
         case 'POST':
-            console.log(headers);
+            switch (original_url) {
+                case '/login':
+                    {
+                        const options = {
+                            port: 3001,
+                            method: 'POST',
+                            path: original_url,
+                            headers: {
+                                username: headers.username,
+                                password: headers.password
+                            }
+                        };
 
-            const options = {
-                port: 3001,
-                method: 'POST',
-                path: original_url,
-                headers: {
-                    username: headers.username,
-                    password: headers.password
-                }
-            };
+                        var res_string = "";
+                        const request = app.request(options, (response) => {
+                            response.setEncoding('utf8');
+                            response.on('data', (chunk) => {
+                                res_string += chunk;
+                            });
+                            response.on('end', () => {
+                                res.setHeader('Content-type', 'text/plain');
+                                res.setHeader('Token', res_string);
+                                res.end();
+                            });
+                        });
 
-            var res_string = "";
-            const request = app.request(options, (response) => {
-                response.setEncoding('utf8');
-                response.on('data', (chunk) => {
-                    res_string += chunk;
-                });
-                response.on('end', () => {
-                    res.setHeader('Content-type', 'text/xml');
-                    res.end(res_string);
-                });
-            });
+                        request.on('error', (e) => {
+                            console.error(`problem with request: ${e.message}`);
+                        });
 
-            request.on('error', (e) => {
-                console.error(`problem with request: ${e.message}`);
-            });
+                        request.end();
+                    }
+                    break;
+                case '/admin':
+                    {
+                        var token_key = headers.token;
 
-            request.end();
+                        const options = {
+                            port: 3001,
+                            method: 'POST',
+                            path: original_url,
+                            headers: {
+                                token: token_key
+                            }
+                        };
+
+                        var res_string = "";
+                        const request = app.request(options, (response) => {
+                            response.setEncoding('utf8');
+                            response.on('data', (chunk) => {
+                                res_string += chunk;
+                            });
+                            response.on('end', () => {
+                                res.setHeader('Content-type', 'text/html');
+                                if (res_string == "OK") {
+                                    fs.readFile(__dirname + '/admin_page.html', (err, data) => {
+                                        if (err) {
+                                            console.log('==> Error: ' + err);
+                                            console.log('==> Error 404: file not found ' + res.url);
+                                            res.writeHead(404, 'Not found');
+                                            res.end();
+                                        } else {                    
+                                            res.end(data);
+                                        }
+                                    });
+                                } else {
+                                    fs.readFile(__dirname + '/admin_404.html', (err, data) => {
+                                        if (err) {
+                                            console.log('==> Error: ' + err);
+                                            console.log('==> Error 404: file not found ' + res.url);
+                                            res.writeHead(404, 'Not found');
+                                            res.end();
+                                        } else {                    
+                                            res.end(data);
+                                        }
+                                    });
+                                }
+                            });
+                        });
+
+                        request.on('error', (e) => {
+                            console.error(`problem with request: ${e.message}`);
+                        });
+
+                        request.end();
+                    }
+                    break;
+            }
             break;
         case 'PUT':
             // ignore

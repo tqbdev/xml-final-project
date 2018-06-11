@@ -6,6 +6,11 @@ $(document).ready(function () {
     window.location.href = document.location.origin + "/login";
   });
 
+  $("#logout").click(function (){
+    window.localStorage.removeItem('Token-key');
+    window.location.href = document.location.origin;
+  });
+
   $("#btn_search").click(function () {
     if ($("#query_input").val().trim() == "") {
       alert("Query string cannot be empty");
