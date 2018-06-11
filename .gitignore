@@ -62,3 +62,6 @@ typings/
 
 # imgs resources
 resources/
+
+# Backup folder
+Backup/
