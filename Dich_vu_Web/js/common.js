@@ -6,14 +6,16 @@ $(document).ready(function () {
     window.location.href = document.location.origin + "/login";
   });
 
-  $("#logout").click(function (){
+  $("#logout").click(function () {
     window.localStorage.removeItem('Token-key');
     window.location.href = document.location.origin;
   });
 
   $("#btn_search").click(function () {
     if ($("#query_input").val().trim() == "") {
-      alert("Query string cannot be empty");
+      //alert("Query string cannot be empty");
+      $("#query_input").css('border-color', 'red');
+      $("#query_input").css('border-width', '3px');
     } else {
       window.location.href =
         document.location.origin + "/search?q=" + $("#query_input").val();
@@ -21,6 +23,9 @@ $(document).ready(function () {
   });
 
   $("#query_input").keypress(function (event) {
+    $("#query_input").css('border-color', '#34495e');
+    $("#query_input").css('border-width', '1px');
+
     if (event.which == 13) {
       if ($("#query_input").val().trim() == "") {
         alert("Query string cannot be empty");
@@ -70,8 +75,5 @@ const numberWithCommas = x => {
 };
 
 function Convert_Price_String(price_string) {
-  // var arr = price_string.split("");
-  // arr.reverse();
-
   return numberWithCommas(price_string);
 }

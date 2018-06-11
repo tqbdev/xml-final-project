@@ -24,6 +24,12 @@ $(document).ajaxComplete(function () {
       var list_book = XML_DATA.getElementsByTagName("Sach");
       $("#list_product").empty();
 
+      if (document.URL.includes("search?q=")) {
+            var length = list_book.length;
+            var span = `<p style="font-size: 20px; margin: 20px;">Kết quả tìm kiếm: ${length} sản phẩm.</p>`;
+            $(span).insertBefore("#list_product");
+      }
+
       for (let i = 0; i < list_book.length; i++) {
             if (list_book[i].nodeType != 1) {
                   continue;

@@ -12,12 +12,14 @@ $(document).ready(function () {
       });
 
       $("#input_username").keypress(function (event) {
+            $("#empty_message").css('display', 'none');
             if (event.which == 13) {
                   login();
             }
       });
 
       $("#input_password").keypress(function (event) {
+            $("#empty_message").css('display', 'none');
             if (event.which == 13) {
                   login();
             }
@@ -25,8 +27,10 @@ $(document).ready(function () {
 });
 
 function login() {
+      $("#error_message").css('display', 'none');
+
       if ($("#input_username").val().trim() == "" || $("#input_password").val().trim() == "") {
-            alert("username or password cannot be empty.");
+            $("#empty_message").css('display', 'block');
       } else {
             $.ajax({
                   headers: {
@@ -40,7 +44,7 @@ function login() {
                   success: function (data, textStatus, jqXHR) {
                         var token = jqXHR.getResponseHeader("Token");
                         if (token == "") {
-                              alert("Login error.\r\nUsername or password not match.");
+                              $("#error_message").css('display', 'block');
                         } else {
                               window.localStorage.setItem('Token-key', token);
                               window.location.href = document.location.origin + "/admin";
