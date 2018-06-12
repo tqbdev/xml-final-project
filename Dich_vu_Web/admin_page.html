@@ -69,13 +69,14 @@
             </div>
       </nav>
 
-      <div class="container">
+      <div class="container-fluid">
             <div class="web_body_wraper">
-                  <div class="row" id="dashboard">
+                  <div class="row" id="dashboard" style="padding-left: 30%; padding-right: 30%;">
                         <canvas class="col-md-12" id="myChart" width="400" height="400" style="margin-top: 40px;"></canvas>
                   </div>
                   <div id="itemManager">
                         <h1>Quản lý sản phẩm</h1>
+                        <h2 id="amount"></h2>
                         <button class="btn btn-success" style="float: right; margin: 20px;" id="btnAddItem">
                               <span>Thêm</span>
                         </button>
@@ -89,58 +90,19 @@
                                                 <th>SKU</th>
                                                 <th>Hình ảnh</th>
                                                 <th>Tên sản phẩm</th>
+                                                <th>Tác giả</th>
                                                 <th>Nhà sản xuất</th>
                                                 <th>Loại</th>
                                                 <th>Giá bán (VND)</th>
                                                 <th>Giá nhập (VND)</th>
                                                 <th>Số lượng tồn</th>
+                                                <th>Viewed</th>
                                                 <th>Doanh thu (VND)</th>
                                                 <th>Edit</th>
                                           </tr>
                                     </thead>
-                                    <tbody>
-                                          <tr>
-                                                <td>1</td>
-                                                <td>#000001</td>
-                                                <td>
-                                                      <img src="resources/imgs/small/5 Centimet Trên Giây_Nhà Xuất Bản Văn Học_Nhà Sách Tiki Sách tiếng Việt Sách văn học_small.jpg">
-                                                </td>
-                                                <td>5 Centimet Trên Giây</td>
-                                                <td>NXB Văn học</td>
-                                                <td>Sách văn học</td>
-                                                <td>68,000</td>
-                                                <td>50,000</td>
-                                                <td>25</td>
-                                                <td>1,200,000</td>
-                                                <td>
-                                                      <button class="btn btn-warning" id="btnEditItem">Edit</button>
-                                                      <br>
-                                                      <br>
-                                                      <br>
-                                                      <button class="btn btn-danger" id="btnEditItem">Delete</button>
-                                                </td>
-                                          </tr>
-                                          <tr>
-                                                <td>2</td>
-                                                <td>#000002</td>
-                                                <td>
-                                                      <img src="resources/imgs/small/7 Bí Quyết Giúp Tình Yêu Vững Bền_Nhà Xuất Bản Phụ Nữ_Nhà Sách Tiki Sách tiếng Việt Sách Tâm lý - Giới tính_small.jpg">
-                                                </td>
-                                                <td>7 Bí Quyết Giúp Tình Yêu Bền Vững</td>
-                                                <td>NXB Phụ nữ</td>
-                                                <td>Sách tâm lý</td>
-                                                <td>78,000</td>
-                                                <td>56,000</td>
-                                                <td>27</td>
-                                                <td>1,900,000</td>
-                                                <td>
-                                                      <button class="btn btn-warning" id="btnEditItem2">Edit</button>
-                                                      <br>
-                                                      <br>
-                                                      <br>
-                                                      <button class="btn btn-danger" id="btnEditItem">Delete</button>
-                                                </td>
-                                          </tr>
+                                    <tbody id="table_body">
+                                          
                                     </tbody>
                               </table>
                         </div>
@@ -327,7 +289,10 @@
             $("#itemManager").show();
       });
 </script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
 <script type="text/javascript" src="js/admin_data_visualization.js"></script>
 
 </html>

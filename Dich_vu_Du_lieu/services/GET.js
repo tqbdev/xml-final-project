@@ -8,6 +8,7 @@ const DATA_PATH = __dirname + "/../data/";
 const VN_BOOK = "Vietnamese_Books.xml";
 const EN_BOOK = "English_Books.xml";
 
+const VIEWED_DATA = "Viewed_Data.json";
 const AUTHENCATION_FILE = "userdata.json";
 
 var GET = {
@@ -21,6 +22,13 @@ var GET = {
             var XML_String = File.readFileSync(DATA_PATH + EN_BOOK, "UTF-8");
             var XML = new DOMParser().parseFromString(XML_String, "text/xml");
             return XML;
+      },
+
+      Viewed_Data: function() {
+            var JSON_String = File.readFileSync(DATA_PATH + VIEWED_DATA, "UTF-8");
+            var jsonData = JSON.parse(JSON_String);
+
+            return jsonData;
       },
 
       Authencation_Data: function() {

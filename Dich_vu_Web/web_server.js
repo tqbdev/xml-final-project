@@ -79,6 +79,7 @@ app.createServer((req, res) => {
                         res_string += chunk;
                     });
                     response.on('end', () => {
+                        //console.log(res_string);
                         res.setHeader('Content-type', 'text/xml');
                         res.end(res_string);
                     });

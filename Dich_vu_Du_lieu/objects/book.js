@@ -1,14 +1,12 @@
 'use strict';
 
 class Book {
-      constructor(SKU, name, manufactorer, author, price,
-            viewed, pulish_date, remain_count, price_import, type) {
+      constructor(SKU, name, manufactorer, author, price, pulish_date, remain_count, price_import, type) {
             this.SKU = SKU;
             this.name = name;
             this.manufactorer = manufactorer;
             this.author = author;
             this.price = price;
-            this.viewed = viewed;
             this.pulish_date = pulish_date;
             this.remain_count = remain_count;
             this.price_import = price_import;
@@ -32,10 +30,6 @@ class Book {
 
       get getprice() {
             return this.price;
-      }
-
-      get getviewed() {
-            return this.viewed;
       }
 
       get getpulish_date() {
