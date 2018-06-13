@@ -16,6 +16,12 @@
                   "password": "c72723566f6a2b50233cc4fb8baef805760a1cf1fb749e4ba3c42b2d4646f9c2",
                   "admin": false,
                   "permit": ["EN"]
+            },
+            {
+                  "username": "nv3",
+                  "password": "7f77c458a22ffce45e369a51e3302afe8fed7c268ce57339d606d16e8b85fc78",
+                  "admin": false,
+                  "permit": ["VN", "EN"]
             }
       ]
 }

@@ -20,14 +20,24 @@ console.log("Init data...");
 var VN_Books_XML = GET.Vietnamese_Books();
 var EN_Books_XML = GET.English_Books();
 var ALL_Books_XML = CONVERT.JOIN_2_XML(VN_Books_XML, EN_Books_XML);
+
+// Data for list product
 var VN_Books_XML_Little = CONVERT.Convert_2_Little_XML(VN_Books_XML);
 var EN_Books_XML_Little = CONVERT.Convert_2_Little_XML(EN_Books_XML);
 var ALL_Books_XML_Little = CONVERT.JOIN_2_XML_Little(VN_Books_XML_Little, EN_Books_XML_Little);
 
-var viewed_data = GET.Viewed_Data();
+// Sale data
+var VN_Books_Sale_XML = CONVERT.Convert_2_Sale_XML(VN_Books_XML);
+var EN_Books_Sale_XML = CONVERT.Convert_2_Sale_XML(EN_Books_XML);
+var ALL_Books_Sale_XML = CONVERT.JOIN_2_Sale_XML(VN_Books_Sale_XML, EN_Books_Sale_XML);
+
+// JWT - user data
 var authencation_data = GET.Authencation_Data();
 
-//var array_All_books = CONVERT.Convert_2_Array_Object(ALL_Books_XML);
+// Viewed count data in a json file
+var viewed_data = GET.Viewed_Data();
+
+// TOP 10 data
 var list = CONVERT.Convert_2_Publish_Revenue_Dict(VN_Books_XML, EN_Books_XML);
 var publish_dict = list[0];
 var revenue_dict = list[1];
@@ -69,6 +79,7 @@ viewed_items.sort(function (first, second) {
 
 var sortByView = viewed_items.slice(0, 10);
 
+// Statistic
 var revenueByMonth = HANDLE_DATA.List_Revenue_By_Month_Year(VN_Books_XML, EN_Books_XML, new Date().getFullYear());
 
 console.log("Init complete...");
@@ -209,7 +220,38 @@ app.createServer((req, res) => {
                                         if (decoded.admin) {
                                             data = new XMLSerializer().serializeToString(CONVERT.Convert_2_Admin_Data(ALL_Books_XML, revenue_dict, viewed_data));
                                         } else {
+                                            var permits = decoded.permit;
 
+                                            const VN = 1,
+                                                EN = 2,
+                                                ALL = 3;
+                                            var tmp = 0;
+
+                                            for (var i = 0; i < permits.length; i++) {
+                                                switch (permits[i]) {
+                                                    case "VN":
+                                                        tmp = tmp | VN;
+                                                        break;
+                                                    case "EN":
+                                                        tmp = tmp | EN;
+                                                        break;
+                                                }
+
+                                                console.log(tmp);
+                                            }
+
+                                            console.log(tmp);
+                                            switch (tmp) {
+                                                case VN:
+                                                    data = new XMLSerializer().serializeToString(VN_Books_Sale_XML);
+                                                    break;
+                                                case EN:
+                                                    data = new XMLSerializer().serializeToString(EN_Books_Sale_XML);
+                                                    break;
+                                                case ALL:
+                                                    data = new XMLSerializer().serializeToString(ALL_Books_Sale_XML);
+                                                    break;
+                                            }
                                         }
                                         break;
                                 }
@@ -237,16 +279,22 @@ app.createServer((req, res) => {
                     var password = req.headers.password;
 
                     var auth = crypto.createHmac('sha256', username).update(password).digest('hex');
+                    //console.log(auth);
                     var token = null;
-                    if (authencation_data[username].password == auth) {
-                        token = JWT.encode({
-                            exp: Date.now() / 1000 + 3600,
-                            admin: authencation_data[username].admin,
-                            permit: authencation_data[username].permit,
-                            user: username
-                        }, secret);
-                    } else {
-                        console.log("ERR");
+
+                    try {
+                        if (authencation_data[username].password == auth) {
+                            token = JWT.encode({
+                                exp: Date.now() / 1000 + 3600,
+                                admin: authencation_data[username].admin,
+                                permit: authencation_data[username].permit,
+                                user: username
+                            }, secret);
+                        } else {
+                            console.log("ERR");
+                        }
+                    } catch (err) {
+                        token = null;
                     }
 
                     res.writeHeader(200, {

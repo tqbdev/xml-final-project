@@ -280,6 +280,75 @@ class CONVERT {
 
             return result_xml;
       }
+
+      Convert_2_Sale_XML(xml_data) {
+            var result_xml = new DOMParser().parseFromString(
+                  "<Danh_sach_Sach></Danh_sach_Sach>"
+            );
+            var list_book = result_xml.getElementsByTagName("Danh_sach_Sach")[0];
+
+            var books = xml_data.getElementsByTagName("Sach");
+
+            for (var i = 0; i < books.length; i++) {
+                  var book = books.item(i);
+
+                  var newBook = result_xml.createElement("Sach");
+                  newBook.setAttribute("SKU", book.getAttribute("SKU"));
+                  newBook.setAttribute("Ten", book.getAttribute("Ten"));
+                  newBook.setAttribute("Tac_gia", book.getAttribute("Tac_gia"));
+                  newBook.setAttribute("NXB", book.getAttribute("NXB"));
+                  newBook.setAttribute("Loai", book.getAttribute("Loai"));
+                  newBook.setAttribute("So_luong_ton", book.getAttribute("So_luong_ton"));
+                  newBook.setAttribute("Gia_ban", book.getAttribute("Gia_ban"));
+
+                  list_book.appendChild(newBook);
+            }
+
+            return result_xml;
+      }
+
+      JOIN_2_Sale_XML(xml_data1, xml_data2) {
+            var result_xml = new DOMParser().parseFromString(
+                  "<Danh_sach_Sach></Danh_sach_Sach>"
+            );
+            var list_book = result_xml.getElementsByTagName("Danh_sach_Sach")[0];
+
+            var books = xml_data1.getElementsByTagName("Sach");
+
+            for (var i = 0; i < books.length; i++) {
+                  var book = books.item(i);
+
+                  var newBook = result_xml.createElement("Sach");
+                  newBook.setAttribute("SKU", book.getAttribute("SKU"));
+                  newBook.setAttribute("Ten", book.getAttribute("Ten"));
+                  newBook.setAttribute("Tac_gia", book.getAttribute("Tac_gia"));
+                  newBook.setAttribute("NXB", book.getAttribute("NXB"));
+                  newBook.setAttribute("Loai", book.getAttribute("Loai"));
+                  newBook.setAttribute("So_luong_ton", book.getAttribute("So_luong_ton"));
+                  newBook.setAttribute("Gia_ban", book.getAttribute("Gia_ban"));
+
+                  list_book.appendChild(newBook);
+            }
+
+            books = xml_data2.getElementsByTagName("Sach");
+
+            for (var i = 0; i < books.length; i++) {
+                  var book = books.item(i);
+
+                  var newBook = result_xml.createElement("Sach");
+                  newBook.setAttribute("SKU", book.getAttribute("SKU"));
+                  newBook.setAttribute("Ten", book.getAttribute("Ten"));
+                  newBook.setAttribute("Tac_gia", book.getAttribute("Tac_gia"));
+                  newBook.setAttribute("NXB", book.getAttribute("NXB"));
+                  newBook.setAttribute("Loai", book.getAttribute("Loai"));
+                  newBook.setAttribute("So_luong_ton", book.getAttribute("So_luong_ton"));
+                  newBook.setAttribute("Gia_ban", book.getAttribute("Gia_ban"));
+
+                  list_book.appendChild(newBook);
+            }
+
+            return result_xml;
+      }
 }
 
 var convert = new CONVERT();

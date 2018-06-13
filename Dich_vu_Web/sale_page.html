@@ -68,7 +68,7 @@
                                     </tr>
                               </thead>
                               <tbody id="table_sale_body">
-                                    <tr>
+                                    <!-- <tr>
                                           <td>
                                                 <button class="btn btn-danger" onclick="removeRow(this)">Bỏ</button>
                                           </td>
@@ -81,12 +81,12 @@
                                                 <input type="number" class="form-control">
                                           </td>
                                           <td></td>
-                                    </tr>
+                                    </tr> -->
                               </tbody>
                         </table>
                   </div>
                   <div style="float: left;">
-                        <button class="btn btn-primary" id="btn_add">Thêm</button>
+                        <!-- <button class="btn btn-primary" id="btn_add">Thêm</button> -->
                         <button class="btn btn-danger" id="btn_clear">Clear all</button>
                   </div>
                   <button class="btn btn-success" style="float: right;" id="btn_checkout">Thanh toán</button>
@@ -107,6 +107,7 @@
                                           <th>Loại</th>
                                           <th>Giá bán (VND)</th>
                                           <th>Số lượng tồn</th>
+                                          <th></th>
                                     </tr>
                               </thead>
                               <tbody id="table_body">
@@ -130,53 +131,5 @@
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 <script type="text/javascript" src="js/sale.js"></script>
-<script>
-      function removeRow(source) {
-            //var parentNode = source.parent.parent;
-            $(source).parent().parent().empty();
-            //$("#table_sale_body").removeChild(parentNode);
-      }
-
-      $(document).ready(function () {
-            $("#btn_add").click(function () {
-                  var tr =
-                        `<tr>
-                                          <td>
-                                                <button class="btn btn-danger" onclick="removeRow(this)">Bỏ</button>
-                                          </td>
-                                          <td>
-                                                <input type="text" class="form-control" placeholder="Nhập SKU">
-                                          </td>
-                                          <td></td>
-                                          <td></td>
-                                          <td>
-                                                <input type="number" class="form-control">
-                                          </td>
-                                          <td></td>
-                                    </tr>`;
-                  $("#table_sale_body").append(tr);
-            });
-
-            $("#btn_clear").click(function () {
-                  $("#table_sale_body").html('');
-                  var tr =
-                        `<tr>
-                                          <td>
-                                                <button class="btn btn-danger" onclick="removeRow(this)">Bỏ</button>
-                                          </td>
-                                          <td>
-                                                <input type="text" class="form-control" placeholder="Nhập SKU">
-                                          </td>
-                                          <td></td>
-                                          <td></td>
-                                          <td>
-                                                <input type="number" class="form-control">
-                                          </td>
-                                          <td></td>
-                                    </tr>`;
-                  $("#table_sale_body").append(tr);
-            });
-      });
-</script>
 
 </html>
