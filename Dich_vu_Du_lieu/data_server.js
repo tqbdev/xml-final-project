@@ -178,25 +178,47 @@ app.createServer((req, res) => {
                     break;
 
                 case '/admin':
-                    res.writeHeader(200, {
-                        'Content-Type': 'text/xml'
-                    });
+                    {
+                        res.writeHeader(200, {
+                            'Content-Type': 'text/xml'
+                        });
 
-                    var data = null;
+                        var data = null;
 
-                    var queryName = args.p;
-                    switch (queryName) {
-                        case 'stat':
-                            data = CONVERT.Convert_Revenue_Month_2_XML(revenueByMonth);
-                            data = new XMLSerializer().serializeToString(data);
-                            break;
-                        case 'products':
-                            data = new XMLSerializer().serializeToString(CONVERT.Convert_2_Admin_Data(ALL_Books_XML, revenue_dict, viewed_data));
-                            break;
+                        var queryName = args.p;
+                        var token_key = req.headers.token;
+
+                        if (token_key != null) {
+                            var check = true;
+                            try {
+                                var decoded = JWT.decode(token_key, secret);
+                            } catch (err) {
+                                check = false;
+                            }
+
+                            if (check == true) {
+                                console.log(decoded);
+                                switch (queryName) {
+                                    case 'stat':
+                                        if (decoded.admin) {
+                                            data = CONVERT.Convert_Revenue_Month_2_XML(revenueByMonth);
+                                            data = new XMLSerializer().serializeToString(data);
+                                        }
+                                        break;
+                                    case 'products':
+                                        if (decoded.admin) {
+                                            data = new XMLSerializer().serializeToString(CONVERT.Convert_2_Admin_Data(ALL_Books_XML, revenue_dict, viewed_data));
+                                        } else {
+
+                                        }
+                                        break;
+                                }
+                            }
+                        }
+
+                        res.end(data);
+                        break;
                     }
-
-                    res.end(data);
-                    break;
 
                 default:
                     res.writeHeader(404, {
@@ -216,9 +238,12 @@ app.createServer((req, res) => {
 
                     var auth = crypto.createHmac('sha256', username).update(password).digest('hex');
                     var token = null;
-                    if (authencation_data[username] == auth) {
+                    if (authencation_data[username].password == auth) {
                         token = JWT.encode({
-                            exp: Date.now() / 1000 + 3600
+                            exp: Date.now() / 1000 + 3600,
+                            admin: authencation_data[username].admin,
+                            permit: authencation_data[username].permit,
+                            user: username
                         }, secret);
                     } else {
                         console.log("ERR");
@@ -231,20 +256,23 @@ app.createServer((req, res) => {
                     break;
 
                 case '/admin':
-                    var token_key = req.headers.token;
+                    {
+                        var token_key = req.headers.token;
 
-                    var data = null;
-                    try {
-                        var decoded = JWT.decode(token_key, secret);
-                        data = "OK";
-                    } catch (err) {
-                        data = err.message;
+                        var data = "";
+                        try {
+                            var decoded = JWT.decode(token_key, secret);
+                            data = JSON.stringify(decoded);
+                        } catch (err) {
+                            //data = err.message;
+                            console.log(err.message);
+                        }
+
+                        res.writeHeader(200, {
+                            'Content-Type': 'text/json'
+                        });
+                        res.end(data);
                     }
-
-                    res.writeHeader(200, {
-                        'Content-Type': 'text/plain'
-                    });
-                    res.end(data);
 
                 default:
                     res.writeHeader(404, {

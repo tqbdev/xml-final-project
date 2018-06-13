@@ -1,5 +1,38 @@
 "use strict";
 
+jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+      "numeric-comma-pre": function (a) {
+            var x = a.replace(",", "");
+            x = x.replace("đ", "");
+            x = x.replace(",", "");
+            //console.log(x);
+            return parseFloat(x);
+      },
+
+      "numeric-comma-asc": function (a, b) {
+            return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+      },
+
+      "numeric-comma-desc": function (a, b) {
+            return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+      }
+});
+
+jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+      "publish-date-pre": function (a) {
+            var x = "01/" + a;
+            return Date.parse(x);
+      },
+
+      "publish-date-asc": function (a, b) {
+            return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+      },
+
+      "publish-date-desc": function (a, b) {
+            return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+      }
+});
+
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
       'November', 'December'
 ];
@@ -9,6 +42,9 @@ var XML_DATA_PRODUCTS = null;
 
 $(document).ready(function () {
       $.ajax({
+            headers: {
+                  'token': window.localStorage.getItem('Token-key')
+            },
             url: "/admin?p=stat",
             dataType: "xml",
             type: 'GET',
@@ -27,6 +63,9 @@ $(document).ready(function () {
       });
 
       $.ajax({
+            headers: {
+                  'token': window.localStorage.getItem('Token-key')
+            },
             url: "/admin?p=products",
             dataType: "xml",
             type: 'GET',
@@ -35,6 +74,19 @@ $(document).ready(function () {
                   if (data != "") {
                         XML_DATA_PRODUCTS = data;
                         Load_Products();
+
+                        $("#table_product").DataTable({
+                              "columnDefs": [{
+                                    "orderable": false,
+                                    "targets": [2, 13]
+                              }, {
+                                    "targets": [0, 2, 6, 8, 9, 10, 11, 12],
+                                    "searchable": false
+                              }, {
+                                    "type": "numeric-comma",
+                                    "targets": [8, 9, 12]
+                              }]
+                        });
                         console.log("OK");
                   }
             },
@@ -146,6 +198,7 @@ function Load_Products() {
             var type = book.getAttribute("Loai");
             var manufactorer = book.getAttribute("NXB");
             var revenue = book.getAttribute("Doanh_thu");
+            var publish_date = book.getAttribute("Ngay_phat_hanh");
 
             var tr = `<tr>
             <td>${i}</td>
@@ -156,6 +209,7 @@ function Load_Products() {
             <td>${name}</td>
             <td>${author}</td>
             <td>${manufactorer}</td>
+            <td>${publish_date}</td>
             <td>${type}</td>
             <td>${Convert_Price_String(price_sale) + " đ"}</td>
             <td>${Convert_Price_String(price_import) + " đ"}</td>

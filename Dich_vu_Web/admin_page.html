@@ -18,6 +18,8 @@
       <script src="js/common.js"></script>
       <link rel="shortcut icon" type="image/png" href="resources/imgs/logo.png" />
       <title>Book store</title>
+
+      <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 <style>
       #linkDashboard,
@@ -59,7 +61,7 @@
                                     <i>
                                           <img src="resources/imgs/icons/user.png" />
                                     </i>
-                                    <span>Chào, admin</span>
+                                    <span>Chào, ######</span>
                               </button>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -80,8 +82,9 @@
                         <button class="btn btn-success" style="float: right; margin: 20px;" id="btnAddItem">
                               <span>Thêm</span>
                         </button>
+                        <div style="clear: both;"></div>
                         <div class="table-responsive">
-                              <table class="table table-bordered">
+                              <table class="table table-bordered table-striped" id="table_product" style="width:100%;">
                                     <thead class="thead-light">
                                           <tr>
                                                 <th>
@@ -92,6 +95,7 @@
                                                 <th>Tên sản phẩm</th>
                                                 <th>Tác giả</th>
                                                 <th>Nhà sản xuất</th>
+                                                <th>NPH</th>
                                                 <th>Loại</th>
                                                 <th>Giá bán (VND)</th>
                                                 <th>Giá nhập (VND)</th>
@@ -102,7 +106,7 @@
                                           </tr>
                                     </thead>
                                     <tbody id="table_body">
-                                          
+
                                     </tbody>
                               </table>
                         </div>
@@ -291,8 +295,9 @@
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 <script type="text/javascript" src="js/admin_data_visualization.js"></script>
 
 </html>

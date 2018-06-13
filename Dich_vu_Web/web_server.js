@@ -63,11 +63,16 @@ app.createServer((req, res) => {
                 });
             } else {
                 // send to data_server
+                var token_key = headers.token;
+
                 original_url = (original_url == '/') ? '/index' : original_url;
                 const options = {
                     port: 3001,
                     method: 'GET',
-                    path: original_url
+                    path: original_url,
+                    headers: {
+                        token: token_key == null ? null : token_key
+                    }
                 };
 
                 var res_string = "";
@@ -156,28 +161,46 @@ app.createServer((req, res) => {
                             });
                             response.on('end', () => {
                                 res.setHeader('Content-type', 'text/html');
-                                if (res_string == "OK") {
-                                    fs.readFile(__dirname + '/admin_page.html', (err, data) => {
-                                        if (err) {
-                                            console.log('==> Error: ' + err);
-                                            console.log('==> Error 404: file not found ' + res.url);
-                                            res.writeHead(404, 'Not found');
-                                            res.end();
-                                        } else {                    
-                                            res.end(data);
-                                        }
-                                    });
-                                } else {
+
+                                if (res_string == "") {
                                     fs.readFile(__dirname + '/admin_404.html', (err, data) => {
                                         if (err) {
                                             console.log('==> Error: ' + err);
                                             console.log('==> Error 404: file not found ' + res.url);
                                             res.writeHead(404, 'Not found');
                                             res.end();
-                                        } else {                    
+                                        } else {
                                             res.end(data);
                                         }
                                     });
+                                } else {
+                                    var decoded = JSON.parse(res_string);
+                                    var isAdmin = decoded.admin;
+                                    if (isAdmin) {
+                                        fs.readFile(__dirname + '/admin_page.html', (err, data) => {
+                                            if (err) {
+                                                console.log('==> Error: ' + err);
+                                                console.log('==> Error 404: file not found ' + res.url);
+                                                res.writeHead(404, 'Not found');
+                                                res.end();
+                                            } else {
+                                                data = data.toString().replace("######", decoded.user);
+                                                res.end(data);
+                                            }
+                                        });
+                                    } else {
+                                        fs.readFile(__dirname + '/sale_page.html', (err, data) => {
+                                            if (err) {
+                                                console.log('==> Error: ' + err);
+                                                console.log('==> Error 404: file not found ' + res.url);
+                                                res.writeHead(404, 'Not found');
+                                                res.end();
+                                            } else {
+                                                data = data.toString().replace("######", decoded.user);
+                                                res.end(data);
+                                            }
+                                        });
+                                    }
                                 }
                             });
                         });

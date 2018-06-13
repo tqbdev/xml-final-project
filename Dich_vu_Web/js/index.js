@@ -27,7 +27,7 @@ $(document).ajaxComplete(function () {
             var book = book_top_new[index];
             var SKU = book.getAttribute("SKU");
             var link_product = document.location.origin + `/detail_product?p=${SKU}`;
-            var img = `<a href="${link_product}"><img class="img-fluid mx-auto d-block" src="resources/${SKU}.jpg" alt="${SKU}"></a>`
+            var img = `<a href="${link_product}"><div id="imgResize"><img class="img-fluid mx-auto d-block" src="resources/${SKU}.jpg" alt="${SKU}"></div></a>`
             $(this).empty();
             $(this).append(img);
       });
@@ -39,7 +39,7 @@ $(document).ajaxComplete(function () {
             var book = book_top_revenue[index];
             var SKU = book.getAttribute("SKU");
             var link_product = document.location.origin + `/detail_product?p=${SKU}`;
-            var img = `<a href="${link_product}"><img class="img-fluid mx-auto d-block" src="resources/${SKU}.jpg" alt="${SKU}"></a>`
+            var img = `<a href="${link_product}"><div id="imgResize"><img class="img-fluid mx-auto d-block" src="resources/${SKU}.jpg" alt="${SKU}"></div></a>`
             $(this).empty();
             $(this).append(img);
       });
@@ -51,7 +51,7 @@ $(document).ajaxComplete(function () {
             var book = book_top_viewed[index];
             var SKU = book.getAttribute("SKU");
             var link_product = document.location.origin + `/detail_product?p=${SKU}`;
-            var img = `<a href="${link_product}"><img class="img-fluid mx-auto d-block" src="resources/${SKU}.jpg" alt="${SKU}"></a>`
+            var img = `<a href="${link_product}"><div id="imgResize"><img class="img-fluid mx-auto d-block" src="resources/${SKU}.jpg" alt="${SKU}"></div></a>`
             $(this).empty();
             $(this).append(img);
       });
