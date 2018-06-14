@@ -1,6 +1,7 @@
 var DOMParser = require("xmldom").DOMParser;
 var XMLSerializer = require("xmldom").XMLSerializer;
 var xpathSelect = require("xpath.js");
+var CONVERT = require("./CONVERT.js");
 
 class HANDLE_DATA {
       Get_Book(xml_data, viewed_data, sku) {
@@ -80,7 +81,7 @@ class HANDLE_DATA {
                         } else {
                               revenue[month] += parseInt(amount) * parseInt(price);
                         }
-                  } 
+                  }
             }
 
             var sales = xml_data2.getElementsByTagName("Ban_hang");
@@ -102,10 +103,53 @@ class HANDLE_DATA {
                         } else {
                               revenue[month] += parseInt(amount) * parseInt(price);
                         }
-                  } 
+                  }
             }
 
             return revenue;
+      }
+
+      Get_Top_10_Viewed(viewed_data) {
+            var viewed_items = Object.keys(viewed_data).map(function (key) {
+                  return [key, viewed_data[key]];
+            });
+
+            viewed_items.sort(function (first, second) {
+                  return parseInt(second[1]) - parseInt(first[1]);
+            });
+
+            return viewed_items.slice(0, 10);
+      }
+
+      Get_Top_10_Publish(publish_dict) {
+            var publish_items = Object.keys(publish_dict).map(function (key) {
+                  return [key, publish_dict[key]];
+            });
+
+            publish_items.sort(function (first, second) {
+                  var dateA = "01/" + first[1];
+                  dateA = dateA.replace("-", "/");
+                  dateA = Date.parse(dateA);
+                  var dateB = "01/" + second[1];
+                  dateB = dateB.replace("-", "/");
+                  dateB = Date.parse(dateB);
+
+                  return dateB - dateA;
+            });
+
+            return publish_items.slice(0, 10);
+      }
+
+      Get_Top_10_Revenue(revenue_dict) {
+            var revenue_items = Object.keys(revenue_dict).map(function (key) {
+                  return [key, revenue_dict[key]];
+            });
+
+            revenue_items.sort(function (first, second) {
+                  return parseInt(second[1]) - parseInt(first[1]);
+            });
+
+            return revenue_items.slice(0, 10);
       }
 }
 

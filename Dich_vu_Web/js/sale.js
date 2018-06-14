@@ -22,9 +22,10 @@ var XML_DATA_PRODUCTS = null;
 
 function removeRow(source) {
       $(source).parent().parent().empty();
+      totalPrice();
 }
 
-function addBook(SKU, price, name) {
+function addBook(SKU, price, name, remain) {
       var check = true;
       var sku_exist = document.getElementsByName("SKU_Code");
       for (var i = 0; i < sku_exist.length; i++) {
@@ -44,11 +45,13 @@ function addBook(SKU, price, name) {
                                     <td>${name}</td>
                                     <td>${Convert_Price_String(price) + " đ"}</td>
                                     <td>
-                                          <input type="number" class="form-control" value=1 oninput="changeAmount(this, ${price})">
+                                          <input type="number" class="form-control" value=1 max="${remain}" oninput="changeAmount(this, ${price})">
                                     </td>
                                     <td>${Convert_Price_String(price) + " đ"}</td>
                               </tr>`;
-            $("#table_sale_body").append(tr);
+            $("#table_sale_body").prepend(tr);
+
+            totalPrice();
       }
 }
 
@@ -61,49 +64,47 @@ function changeAmount(source, price) {
             var total = $(source).parent().next();
             total.html(`${Convert_Price_String(parseInt(price) * amount) + " đ"}`);
       }
+
+      totalPrice();
+}
+
+function Convert(a) {
+      var x = a.replace(/,/g, "");
+      x = x.replace("đ", "");
+      return parseInt(x);
+}
+
+function totalPrice() {
+      var total = 0;
+      var prevAll = $("#total").parent().prevAll();
+      for (var i = 0; i < prevAll.length; i++) {
+            if (prevAll[i] == null || prevAll[i].lastElementChild == null) {
+                  continue;
+            }
+            var priceStr = prevAll[i].lastElementChild.innerHTML;
+            var prevPrice = Convert(priceStr);
+            total += prevPrice;
+      }
+      $("#total").html(`${Convert_Price_String(total)+ " đ"}`);
+}
+
+function clearAllRow() {
+      $("#table_sale_body").html('');
+      var tr =
+            `<tr>
+                        <td colspan="5" style="text-align: right;">Tổng thành tiền</td>
+                        <td id="total">0 đ</td>
+                  </tr>`;
+      $("#table_sale_body").append(tr);
 }
 
 $(document).ready(function () {
-      // $("#btn_add").click(function () {
-      //       var tr =
-      //             `<tr>
-      //                               <td>
-      //                                     <button class="btn btn-danger" onclick="removeRow(this)">Bỏ</button>
-      //                               </td>
-      //                               <td>
-      //                                     <input type="text" class="form-control" placeholder="Nhập SKU" id="input_sku_0">
-      //                               </td>
-      //                               <td></td>
-      //                               <td></td>
-      //                               <td>
-      //                                     <input type="number" class="form-control">
-      //                               </td>
-      //                               <td></td>
-      //                         </tr>`;
-      //       $("#table_sale_body").append(tr);
-      //       $("#input_sku_0").autocomplete({
-      //             source: SKU_ARR
-      //       });
-      // });
-
       $("#btn_clear").click(function () {
-            $("#table_sale_body").html('');
-            var tr =
-                  `<tr>
-                                    <td>
-                                          <button class="btn btn-danger" onclick="removeRow(this)">Bỏ</button>
-                                    </td>
-                                    <td>
-                                          <input type="text" class="form-control" placeholder="Nhập SKU">
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                          <input type="number" class="form-control">
-                                    </td>
-                                    <td></td>
-                              </tr>`;
-            $("#table_sale_body").append(tr);
+            clearAllRow();
+      });
+
+      $("#btn_checkout").click(function () {
+            checkOut();
       });
 
       $.ajax({
@@ -140,6 +141,67 @@ $(document).ready(function () {
       });
 });
 
+function checkOut() {
+      var xmlRoot = "<Danh_sach_Ban_hang></Danh_sach_Ban_hang>";
+      var parser = new DOMParser();
+      var xmlDoc = parser.parseFromString(xmlRoot, "text/xml");
+
+      var list_sale = xmlDoc.getElementsByTagName("Danh_sach_Ban_hang")[0];
+
+      var prevAll = $("#total").parent().prevAll();
+
+      if (prevAll.length == 0) {
+            alert("Không có sản phẩm để thanh toán");
+      } else {
+            for (var i = 0; i < prevAll.length; i++) {
+                  if (prevAll[i] == null || prevAll[i].lastElementChild == null) {
+                        continue;
+                  }
+
+                  var SKU = $(prevAll[i]).children().eq(1).html();
+                  var price = Convert($(prevAll[i]).children().eq(3).html());
+                  var amount = $(prevAll[i]).children().eq(4)[0].firstElementChild.value;
+
+                  var book = xmlDoc.createElement("Sach");
+                  book.setAttribute("SKU", SKU);
+                  book.setAttribute("Gia_ban", price);
+                  book.setAttribute("So_luong", amount);
+
+                  list_sale.appendChild(book);
+            }
+
+            var serializer = new XMLSerializer();
+            var xmlString = serializer.serializeToString(xmlDoc);
+
+            $.ajax({
+                  headers: {
+                        'token': window.localStorage.getItem('Token-key')
+                  },
+                  url: "/sale",
+                  data: xmlString,
+                  dataType: "xml",
+                  type: 'POST',
+
+                  success: function (data) {
+                        if (data != "") {
+                              var result = data.getElementsByTagName("Ket_qua")[0];
+                              var mess = result.getAttribute("mess");
+
+                              alert(mess);
+                              if (mess == "Thanh toán thành công") {
+                                    window.location.href = document.location.href;
+                                    console.log(mess);
+                              }
+                              console.log("OK");
+                        }
+                  },
+                  error: function (xhr, status, error) {
+                        console.log("Error");
+                  }
+            });
+      }
+}
+
 function Load_Products() {
       var books = XML_DATA_PRODUCTS.getElementsByTagName("Sach");
 
@@ -149,7 +211,7 @@ function Load_Products() {
             let SKU = book.getAttribute("SKU");
             let name = book.getAttribute("Ten");
             var author = book.getAttribute("Tac_gia");
-            var remain_amount = book.getAttribute("So_luong_ton");
+            let remain_amount = book.getAttribute("So_luong_ton");
             let price_sale = book.getAttribute("Gia_ban");
             var type = book.getAttribute("Loai");
             var manufactorer = book.getAttribute("NXB");
@@ -174,7 +236,12 @@ function Load_Products() {
             $("#table_body").append(tr);
             var btn = document.getElementById(`btn_add_book_${i}`);
             btn.onclick = function () {
-                  addBook(SKU, price_sale, name);
+                  var remain = parseInt(remain_amount);
+                  if (remain > 0) {
+                        addBook(SKU, price_sale, name, remain);
+                  } else {
+                        alert("Số lượng tồn không đủ");
+                  }
             };
       }
 }

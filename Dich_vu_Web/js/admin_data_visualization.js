@@ -2,9 +2,10 @@
 
 jQuery.extend(jQuery.fn.dataTableExt.oSort, {
       "numeric-comma-pre": function (a) {
-            var x = a.replace(",", "");
+            var x = a.replace(/,/g, "");
             x = x.replace("đ", "");
-            x = x.replace(",", "");
+            // x = x.replace(",", "");
+            // x = x.replace(",", "");
             //console.log(x);
             return parseFloat(x);
       },
