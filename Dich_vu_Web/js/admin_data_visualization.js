@@ -201,7 +201,12 @@ function Load_Products() {
             var revenue = book.getAttribute("Doanh_thu");
             var publish_date = book.getAttribute("Ngay_phat_hanh");
 
-            var tr = `<tr>
+            var bgColor = ``;
+            if (parseInt(remain_amount) <= 0) {
+                  bgColor = `style="background-color:orange"`;
+            }
+
+            var tr = `<tr ${bgColor}>
             <td>${i}</td>
             <td>${SKU}</td>
             <td>

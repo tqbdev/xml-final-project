@@ -1,9 +1,8 @@
 ﻿
 
-
 <?xml version="1.0" encoding="utf-8"?>
 <Danh_sach_Sach>
-  <Sach SKU="3100012165562" Ten="Chào Mừng Đến Với N.H.K!" NXB="Nhà Xuất Bản Văn Học" Tac_gia="Tatsuhiko Takimoto" Gia_ban="64000" Ngay_phat_hanh="08-2015" So_luong_ton="68" Gia_nhap="51200" Loai="Sách văn học">
+  <Sach SKU="3100012165562" Ten="Chào Mừng Đến Với N.H.K!" NXB="Nhà Xuất Bản Văn Học" Tac_gia="Tatsuhiko Takimoto" Gia_ban="64000" Ngay_phat_hanh="08-2015" So_luong_ton="77" Gia_nhap="51200" Loai="Sách văn học">
     <Danh_sach_Ban_hang>
       <Ban_hang Ngay_ban="2018/03/31" So_luong="2" Gia_ban="64000"/>
       <Ban_hang Ngay_ban="2018/02/27" So_luong="5" Gia_ban="64000"/>
@@ -13,13 +12,6 @@
       <Ban_hang Ngay_ban="2018/02/12" So_luong="4" Gia_ban="64000"/>
       <Ban_hang Ngay_ban="2018/04/27" So_luong="2" Gia_ban="64000"/>
       <Ban_hang Ngay_ban="2018/02/05" So_luong="4" Gia_ban="64000"/>
-      <Ban_hang Ngay_ban="2018/06/14" So_luong="1" Gia_ban="64000"/>
-      <Ban_hang Ngay_ban="2018/06/14" So_luong="1" Gia_ban="64000"/>
-      <Ban_hang Ngay_ban="2018/06/14" So_luong="1" Gia_ban="64000"/>
-      <Ban_hang Ngay_ban="2018/06/14" So_luong="1" Gia_ban="64000"/>
-      <Ban_hang Ngay_ban="2018/06/14" So_luong="1" Gia_ban="64000"/>
-      <Ban_hang Ngay_ban="2018/06/14" So_luong="1" Gia_ban="64000"/>
-      <Ban_hang Ngay_ban="2018/06/14" So_luong="1" Gia_ban="64000"/>
     </Danh_sach_Ban_hang>
   </Sach>
   <Sach SKU="2435439964247" Ten="Mình Là Cá, Việc Của Mình Là Bơi" NXB="Nhà Xuất Bản Thế Giới" Tac_gia="Takeshi Furukawa" Gia_ban="62299" Ngay_phat_hanh="08-2017" So_luong_ton="83" Gia_nhap="49840" Loai="Sách kỹ năng - Sống đẹp">
@@ -36,7 +28,7 @@
       <Ban_hang Ngay_ban="2018/05/04" So_luong="1" Gia_ban="62299"/>
     </Danh_sach_Ban_hang>
   </Sach>
-  <Sach SKU="2506010458896" Ten="Khi Hơi Thở Hóa Thinh Không" NXB="Nhà Xuất Bản Lao Động" Tac_gia="Paul Kalanithi" Gia_ban="65400" Ngay_phat_hanh="07-2017" So_luong_ton="95" Gia_nhap="52320" Loai="Sách văn học">
+  <Sach SKU="2506010458896" Ten="Khi Hơi Thở Hóa Thinh Không" NXB="Nhà Xuất Bản Lao Động" Tac_gia="Paul Kalanithi" Gia_ban="65400" Ngay_phat_hanh="07-2017" So_luong_ton="96" Gia_nhap="52320" Loai="Sách văn học">
     <Danh_sach_Ban_hang>
       <Ban_hang Ngay_ban="2018/01/08" So_luong="4" Gia_ban="65400"/>
       <Ban_hang Ngay_ban="2018/04/19" So_luong="5" Gia_ban="65400"/>
@@ -50,7 +42,6 @@
       <Ban_hang Ngay_ban="2018/04/13" So_luong="1" Gia_ban="65400"/>
       <Ban_hang Ngay_ban="2018/02/27" So_luong="1" Gia_ban="65400"/>
       <Ban_hang Ngay_ban="2018/05/09" So_luong="3" Gia_ban="65400"/>
-      <Ban_hang Ngay_ban="2018/06/14" So_luong="1" Gia_ban="65400"/>
     </Danh_sach_Ban_hang>
   </Sach>
   <Sach SKU="5717394904351" Ten="Nghĩ Đơn Giản, Sống Đơn Thuần" NXB="Nhà Xuất Bản Thế Giới" Tac_gia="Tolly Burkan" Gia_ban="43400" Ngay_phat_hanh="04-2018" So_luong_ton="99" Gia_nhap="34720" Loai="Sách kỹ năng - Sống đẹp">

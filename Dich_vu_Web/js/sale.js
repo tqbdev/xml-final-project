@@ -216,7 +216,14 @@ function Load_Products() {
             var type = book.getAttribute("Loai");
             var manufactorer = book.getAttribute("NXB");
 
-            var tr = `<tr>
+            var bgColor = ``;
+            var disable = ``;
+            if (parseInt(remain_amount) <= 0) {
+                  bgColor = `style="background-color:orange"`;
+                  disable = `disabled`;
+            }
+
+            var tr = `<tr ${bgColor}>
             <td>${i}</td>
             <td>${SKU}</td>
             <td>
@@ -229,7 +236,7 @@ function Load_Products() {
             <td>${Convert_Price_String(price_sale) + " đ"}</td>
             <td>${remain_amount}</td>
             <td>
-                  <button class="btn btn-primary" id="btn_add_book_${i}">Thêm</button>
+                  <button class="btn btn-primary" id="btn_add_book_${i}" ${disable}>Thêm</button>
             </td>
       </tr>`
 
