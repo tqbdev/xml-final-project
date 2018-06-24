@@ -1,8 +1,10 @@
 ﻿
 
+
+
 <?xml version="1.0" encoding="utf-8"?>
 <Danh_sach_Sach>
-  <Sach SKU="4780525432680" Ten="The Four: The Hidden DNA Of Amazon, Apple, Facebook, And Google" NXB="Penguin Random House US" Tac_gia="Scott Galloway" Gia_ban="441000" Ngay_phat_hanh="01-2017" So_luong_ton="67" Gia_nhap="352800" Loai="Business &amp; Economics">
+  <Sach SKU="4780525432680" Ten="The Four: The Hidden DNA Of Amazon, Apple, Facebook, And Google" NXB="Penguin Random House US" Tac_gia="Scott Galloway" Gia_ban="441000" Ngay_phat_hanh="01-2017" So_luong_ton="66" Gia_nhap="352800" Loai="Business &amp; Economics">
     <Danh_sach_Ban_hang>
       <Ban_hang Ngay_ban="2018/02/15" So_luong="2" Gia_ban="441000"/>
       <Ban_hang Ngay_ban="2018/04/10" So_luong="2" Gia_ban="441000"/>
@@ -15,9 +17,10 @@
       <Ban_hang Ngay_ban="2018/03/02" So_luong="3" Gia_ban="441000"/>
       <Ban_hang Ngay_ban="2018/03/21" So_luong="3" Gia_ban="441000"/>
       <Ban_hang Ngay_ban="2018/04/19" So_luong="1" Gia_ban="441000"/>
+      <Ban_hang Ngay_ban="2018/06/24" So_luong="1" Gia_ban="441000"/>
     </Danh_sach_Ban_hang>
   </Sach>
-  <Sach SKU="2305079849009" Ten="Special Edition Harry Potter Paperback Boxed Set" NXB="Simon &amp; Schuster US" Tac_gia="J. K. Rowling" Gia_ban="1199000" Ngay_phat_hanh="08-2013" So_luong_ton="22" Gia_nhap="959200" Loai="Fiction - Literature">
+  <Sach SKU="2305079849009" Ten="Special Edition Harry Potter Paperback Boxed Set" NXB="Simon &amp; Schuster US" Tac_gia="J. K. Rowling" Gia_ban="1199000" Ngay_phat_hanh="08-2013" So_luong_ton="21" Gia_nhap="959200" Loai="Fiction - Literature">
     <Danh_sach_Ban_hang>
       <Ban_hang Ngay_ban="2018/02/20" So_luong="1" Gia_ban="1199000"/>
       <Ban_hang Ngay_ban="2018/01/16" So_luong="3" Gia_ban="1199000"/>
@@ -39,6 +42,7 @@
       <Ban_hang Ngay_ban="2018/03/24" So_luong="1" Gia_ban="1199000"/>
       <Ban_hang Ngay_ban="2018/05/22" So_luong="5" Gia_ban="1199000"/>
       <Ban_hang Ngay_ban="2018/05/09" So_luong="4" Gia_ban="1199000"/>
+      <Ban_hang Ngay_ban="2018/06/24" So_luong="1" Gia_ban="1199000"/>
     </Danh_sach_Ban_hang>
   </Sach>
   <Sach SKU="9628272496317" Ten="Oxford Read and Discover 6: Wonderful Ecosystems Audio CD Pack" NXB="Oxford University Press" Tac_gia="Louise Spilsbury" Gia_ban="85000" Ngay_phat_hanh="06-2011" So_luong_ton="55" Gia_nhap="68000" Loai="Education - Teaching">

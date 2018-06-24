@@ -151,6 +151,34 @@ class HANDLE_DATA {
 
             return revenue_items.slice(0, 10);
       }
+
+      Delete_Book(VN_Books_XML, EN_Books_XML, SKU) {
+            var book = xpathSelect(
+                  VN_Books_XML,
+                  "/Danh_sach_Sach/Sach[@SKU='" +
+                  SKU +
+                  "']"
+            )[0];
+
+            if (book == null || book == undefined) {
+                  book = xpathSelect(
+                        EN_Books_XML,
+                        "/Danh_sach_Sach/Sach[@SKU='" +
+                        SKU +
+                        "']"
+                  )[0];
+
+                  if (book == null || book == undefined) {
+                        throw "Lỗi! Không tìm thấy sách";
+                  } else {
+                        var list = EN_Books_XML.getElementsByTagName("Danh_sach_Sach")[0];
+                        list.removeChild(book);
+                  }
+            } else {
+                  var list = VN_Books_XML.getElementsByTagName("Danh_sach_Sach")[0];
+                  list.removeChild(book);
+            }
+      }
 }
 
 var handle = new HANDLE_DATA();

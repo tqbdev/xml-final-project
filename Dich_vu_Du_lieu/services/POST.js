@@ -4,11 +4,14 @@ var DOMParser = require("xmldom").DOMParser;
 var XMLSerializer = require("xmldom").XMLSerializer;
 var xpathSelect = require("xpath.js");
 
-const VN = 1, EN = 2;
+const VN = 1,
+      EN = 2;
 
 const DATA_PATH = __dirname + "/../data/";
 const VN_BOOK = "Vietnamese_Books.xml";
 const EN_BOOK = "English_Books.xml";
+
+const SALE_DATA = "Sale_Data.xml";
 
 function nowDay() {
       var d = new Date();
@@ -24,7 +27,7 @@ function nowDay() {
 }
 
 var POST = {
-      Sale_Product: function(VN_Books_XML, EN_Books_XML, Sale_XML_Str, permit) {
+      Sale_Product: function (VN_Books_XML, EN_Books_XML, Sale_XML_Str, permit) {
             var Sale_XML = new DOMParser().parseFromString(Sale_XML_Str, "text/xml");
             var books = Sale_XML.getElementsByTagName("Sach");
 
@@ -62,8 +65,7 @@ var POST = {
 
                   if (book_in_xml == null) {
                         throw "Lỗi! Không tìm thấy mã SKU của sách";
-                  }
-                  else {
+                  } else {
                         if (permit & 1 != check) {
                               throw "Lỗi! Bạn không có quyền thanh toán";
                         }
@@ -110,14 +112,19 @@ var POST = {
             }
       },
 
-      Save_VN_Book_XML: function(xml_data) {
+      Save_VN_Book_XML: function (xml_data) {
             var XML_String = format.xml(new XMLSerializer().serializeToString(xml_data));
             File.writeFileSync(DATA_PATH + VN_BOOK, XML_String, "utf-8");
       },
 
-      Save_EN_Book_XML: function(xml_data) {
+      Save_EN_Book_XML: function (xml_data) {
             var XML_String = format.xml(new XMLSerializer().serializeToString(xml_data));
             File.writeFileSync(DATA_PATH + EN_BOOK, XML_String, "utf-8");
+      },
+
+      Save_Sale_Staff_XML: function (xml_data) {
+            var XML_String = format.xml(new XMLSerializer().serializeToString(xml_data));
+            File.writeFileSync(DATA_PATH + SALE_DATA, XML_String, "utf-8");
       }
 }
 

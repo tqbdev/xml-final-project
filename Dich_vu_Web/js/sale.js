@@ -19,6 +19,7 @@ jQuery.extend(jQuery.fn.dataTableExt.oSort, {
 });
 
 var XML_DATA_PRODUCTS = null;
+var table_data = null;
 
 function removeRow(source) {
       $(source).parent().parent().empty();
@@ -107,6 +108,34 @@ $(document).ready(function () {
             checkOut();
       });
 
+
+      requireRevenue();
+      requireProducts();
+});
+
+function requireRevenue() {
+      $.ajax({
+            headers: {
+                  'token': window.localStorage.getItem('Token-key')
+            },
+            url: "/admin?p=stat",
+            dataType: "xml",
+            type: 'GET',
+
+            success: function (data) {
+                  if (data != "") {
+                        var revenue = parseInt(data.getElementsByTagName("Thong_ke")[0].getAttribute("Doanh_thu"));
+                        $("#revenue").html(`Tổng doanh thu cá nhân: ${Convert_Price_String(revenue)} đ`);
+                        console.log("OK");
+                  }
+            },
+            error: function (xhr, status, error) {
+                  console.log("Error");
+            }
+      });
+}
+
+function requireProducts() {
       $.ajax({
             headers: {
                   'token': window.localStorage.getItem('Token-key')
@@ -120,7 +149,7 @@ $(document).ready(function () {
                         XML_DATA_PRODUCTS = data;
                         Load_Products();
 
-                        $("#table_product").DataTable({
+                        table_data = $("#table_product").DataTable({
                               "columnDefs": [{
                                     "orderable": false,
                                     "targets": 2
@@ -132,6 +161,10 @@ $(document).ready(function () {
                                     "targets": [7]
                               }]
                         });
+
+                        document.getElementById("loader").style.display = "none";
+                        document.getElementById("table").style.display = "block";
+
                         console.log("OK");
                   }
             },
@@ -139,7 +172,7 @@ $(document).ready(function () {
                   console.log("Error");
             }
       });
-});
+}
 
 function checkOut() {
       var xmlRoot = "<Danh_sach_Ban_hang></Danh_sach_Ban_hang>";
@@ -189,7 +222,12 @@ function checkOut() {
 
                               alert(mess);
                               if (mess == "Thanh toán thành công") {
-                                    window.location.href = document.location.href;
+                                    //window.location.href = document.location.href;
+                                    table_data.destroy();
+                                    document.getElementById("loader").style.display = "block";
+                                    document.getElementById("table").style.display = "none";
+                                    requireRevenue();
+                                    requireProducts();
                                     console.log(mess);
                               }
                               console.log("OK");
@@ -203,6 +241,7 @@ function checkOut() {
 }
 
 function Load_Products() {
+      $("#table_body").html('');
       var books = XML_DATA_PRODUCTS.getElementsByTagName("Sach");
 
       for (var i = 0; i < books.length; i++) {

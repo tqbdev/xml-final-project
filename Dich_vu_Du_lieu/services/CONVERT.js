@@ -307,6 +307,34 @@ class CONVERT {
             return result_xml;
       }
 
+      Convert_2_Revenue_Staff_Dict(xml_data) {
+            var result = {};
+
+            var list_staff = xml_data.getElementsByTagName("Nhan_vien");
+
+            for (var i = 0; i < list_staff.length; i++) {
+                  var staff = list_staff[i];
+
+                  var username = staff.getAttribute("username");
+
+                  var list_sale = staff.getElementsByTagName("Ban_hang");
+
+                  var total = 0;
+                  for (var j = 0; j < list_sale.length; j++) {
+                        var sale = list_sale[j];
+
+                        var price = sale.getAttribute("Gia_ban");
+                        var amount = sale.getAttribute("So_luong");
+
+                        total += parseInt(price) * parseInt(amount);
+                  }
+
+                  result[username] = total;
+            }
+
+            return result;
+      }
+
       JOIN_2_Sale_XML(xml_data1, xml_data2) {
             var result_xml = new DOMParser().parseFromString(
                   "<Danh_sach_Sach></Danh_sach_Sach>"
@@ -345,6 +373,38 @@ class CONVERT {
                   newBook.setAttribute("Gia_ban", book.getAttribute("Gia_ban"));
 
                   list_book.appendChild(newBook);
+            }
+
+            return result_xml;
+      }
+
+      Convert_Revenue_Staff_2_XML_Specific(revenue_staff_dict, username) {
+            var revenue = revenue_staff_dict[username];
+
+            if (revenue === undefined) {
+                  revenue = 0;
+            }
+
+            var result_xml = new DOMParser().parseFromString(
+                  `<Thong_ke Doanh_thu="${revenue}"></Thong_ke>`
+            );
+
+            return result_xml;
+      }
+
+      Convert_Revenue_Staff_2_XML(revenue_staff_dict) {
+            var result_xml = new DOMParser().parseFromString(
+                  "<Danh_sach_Doanh_thu></Danh_sach_Doanh_thu>"
+            );
+
+            var list_sale = result_xml.getElementsByClassName("Danh_sach_Doanh_thu")[0];
+
+            for (var username in revenue_staff_dict) {
+                  var staff = result_xml.createElement("Nhan_vien");
+                  staff.setAttribute("username", username);
+                  staff.setAttribute("Doanh_thu", revenue_staff_dict[username]);
+
+                  list_sale.appendChild(staff);
             }
 
             return result_xml;

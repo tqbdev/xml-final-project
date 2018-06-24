@@ -11,6 +11,8 @@ const EN_BOOK = "English_Books.xml";
 const VIEWED_DATA = "Viewed_Data.json";
 const AUTHENCATION_FILE = "userdata.json";
 
+const SALE_DATA = "Sale_Data.xml";
+
 var GET = {
       Vietnamese_Books: function () {
             var XML_String = File.readFileSync(DATA_PATH + VN_BOOK, "UTF-8");
@@ -51,6 +53,12 @@ var GET = {
             }
 
             return dict;
+      },
+
+      Sale_Data: function() {
+            var XML_String = File.readFileSync(DATA_PATH + SALE_DATA, "UTF-8");
+            var XML = new DOMParser().parseFromString(XML_String, "text/xml");
+            return XML;
       }
 }
 

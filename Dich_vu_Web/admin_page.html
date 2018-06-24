@@ -78,7 +78,8 @@
                               <span>Thêm</span>
                         </button>
                         <div style="clear: both;"></div>
-                        <div class="table-responsive">
+                        <div id="loader"></div>
+                        <div class="table-responsive" id="table" style="display: none;">
                               <table class="table table-bordered table-striped" id="table_product" style="width:100%;">
                                     <thead class="thead-light">
                                           <tr>
@@ -132,10 +133,10 @@
                   <div class="modal-body modal_information">
                         <div class="row">
                               <div class="col-md-3 entry_information">
-                                    <label>Hình ảnh (550x550)</label>
+                                    <label>Mã sản phẩm</label>
                               </div>
                               <div class="col-md-9 entry_information">
-                                    <input type="file" />
+                                    <input class="form-control" type="text" placeholder="Nhập mã sản phẩm" />
                               </div>
 
                               <div class="col-md-3 entry_information">
@@ -182,15 +183,14 @@
                         </div>
                   </div>
                   <div class="modal-footer modal_information">
-                        <button class="btn btn-success">Xong</button>
-                        <button class="btn btn-info">Hủy</button>
+                        <button class="btn btn-success" id="addDoneBtn">Xong</button>
                   </div>
             </div>
       </div>
 </div>
 <!-- END Modal Add Item -->
 
-<!-- BEGIN Modal Add Item -->
+<!-- BEGIN Modal Edit Item -->
 <div class="modal fade" id="modalEditItem" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -203,13 +203,6 @@
                   </div>
                   <div class="modal-body modal_information">
                         <div class="row">
-                              <div class="col-md-3 entry_information">
-                                    <label>Hình ảnh (550x550)</label>
-                              </div>
-                              <div class="col-md-9 entry_information">
-                                    <input type="file" />
-                              </div>
-
                               <div class="col-md-3 entry_information">
                                     <label>Tên sản phẩm</label>
                               </div>

@@ -41,7 +41,14 @@ const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
 var XML_DATA_STAT = null;
 var XML_DATA_PRODUCTS = null;
 
+var table_data = null;
+
 $(document).ready(function () {
+      requireTotalRevenue();
+      requireProducts();     
+});
+
+function requireTotalRevenue() {
       $.ajax({
             headers: {
                   'token': window.localStorage.getItem('Token-key')
@@ -62,7 +69,9 @@ $(document).ready(function () {
                   console.log("Error");
             }
       });
+}
 
+function requireProducts() {
       $.ajax({
             headers: {
                   'token': window.localStorage.getItem('Token-key')
@@ -76,7 +85,7 @@ $(document).ready(function () {
                         XML_DATA_PRODUCTS = data;
                         Load_Products();
 
-                        $("#table_product").DataTable({
+                        table_data = $("#table_product").DataTable({
                               "columnDefs": [{
                                     "orderable": false,
                                     "targets": [2, 13]
@@ -95,7 +104,7 @@ $(document).ready(function () {
                   console.log("Error");
             }
       });
-});
+}
 
 function CreateArrayWithXMLStat() {
       var result = {};
@@ -133,7 +142,7 @@ function drawChart() {
 
       var ctx = document.getElementById("myChart");
       var now = new Date();
-      var myChart = new Chart(ctx, {
+      new Chart(ctx, {
             type: 'line',
             data: {
                   labels: MONTHS,
@@ -183,13 +192,14 @@ function drawChart() {
 }
 
 function Load_Products() {
+      $("#table_body").html('');
       var books = XML_DATA_PRODUCTS.getElementsByTagName("Sach");
       $("#amount").html(`Có tổng cộng: <span style="color: red">${books.length}</span> sản phẩm`)
 
-      for (var i = 0; i < books.length; i++) {
+      for (let i = 0; i < books.length; i++) {
             var book = books[i];
 
-            var SKU = book.getAttribute("SKU");
+            let SKU = book.getAttribute("SKU");
             var name = book.getAttribute("Ten");
             var author = book.getAttribute("Tac_gia");
             var remain_amount = book.getAttribute("So_luong_ton");
@@ -223,14 +233,63 @@ function Load_Products() {
             <td>${view_count}</td>
             <td>${Convert_Price_String(revenue) + " đ"}</td>
             <td>
-                  <button class="btn btn-warning" id="btnEditItem">Edit</button>
+                  <button class="btn btn-warning" id="btnEditItem_${i}">Edit</button>
                   <br>
                   <br>
                   <br>
-                  <button class="btn btn-danger" id="btnEditItem">Delete</button>
+                  <button class="btn btn-danger" id="btnDeleteItem_${i}">Delete</button>
             </td>
       </tr>`
 
             $("#table_body").append(tr);
+            document.getElementById(`btnDeleteItem_${i}`).onclick = function () {
+                  deleteBook(SKU);
+            };
+
+            document.getElementById(`btnEditItem_${i}`).onclick = function () {
+                  editBook(SKU);
+            };
+      }
+
+      document.getElementById("loader").style.display = "none";
+      document.getElementById("table").style.display = "block";
+}
+
+function editBook(SKU) {
+
+}
+
+function deleteBook(SKU) {
+      if (confirm(`Bạn có muốn xoá sản phẩm có mã là ${SKU}?`)) {
+            $.ajax({
+                  headers: {
+                        'token': window.localStorage.getItem('Token-key')
+                  },
+                  url: `/delete-product`,
+                  dataType: "xml",
+                  type: 'POST',
+                  data: `<Xoa SKU="${SKU}"></Xoa>`,
+
+                  success: function (data) {
+                        if (data != "") {
+                              var result = data.getElementsByTagName("Ket_qua")[0];
+                              var mess = result.getAttribute("mess");
+
+                              alert(mess);
+                              if (mess == "Xoá thành công") {
+                                    table_data.destroy();
+                                    document.getElementById("loader").style.display = "block";
+                                    document.getElementById("table").style.display = "none";
+                                    requireTotalRevenue();
+                                    requireProducts();
+                                    console.log(mess);
+                              }
+                              console.log("OK");
+                        }
+                  },
+                  error: function (xhr, status, error) {
+                        console.log("Error");
+                  }
+            });
       }
 }

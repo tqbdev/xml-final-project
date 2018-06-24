@@ -26,6 +26,9 @@ var VN_Books_XML = GET.Vietnamese_Books();
 var EN_Books_XML = GET.English_Books();
 var ALL_Books_XML = CONVERT.JOIN_2_XML(VN_Books_XML, EN_Books_XML);
 
+var Sale_Staff_XML = GET.Sale_Data();
+var revenue_staff_dict = CONVERT.Convert_2_Revenue_Staff_Dict(Sale_Staff_XML);
+
 // Data for list product
 var VN_Books_XML_Little = CONVERT.Convert_2_Little_XML(VN_Books_XML);
 var EN_Books_XML_Little = CONVERT.Convert_2_Little_XML(EN_Books_XML);
@@ -185,8 +188,16 @@ app.createServer((req, res) => {
                                             if (decoded.admin) {
                                                 data = CONVERT.Convert_Revenue_Month_2_XML(revenueByMonth);
                                                 data = new XMLSerializer().serializeToString(data);
+                                            } else {
+                                                data = CONVERT.Convert_Revenue_Staff_2_XML_Specific(revenue_staff_dict, decoded.user);
+                                                data = new XMLSerializer().serializeToString(data);
                                             }
                                             break;
+                                        case 'stat-staff':
+                                            if (decoded.admin) {
+                                                data = CONVERT.Convert_Revenue_Staff_2_XML(revenue_staff_dict);
+                                                data = new XMLSerializer().serializeToString(data);
+                                            }
                                         case 'products':
                                             if (decoded.admin) {
                                                 data = new XMLSerializer().serializeToString(CONVERT.Convert_2_Admin_Data(ALL_Books_XML, revenue_dict, viewed_data));
@@ -298,6 +309,7 @@ app.createServer((req, res) => {
                                 var decoded = JWT.decode(token_key, secret);
 
                                 var permits = decoded.permit;
+                                var username = decoded.user;
 
                                 var tmp = 0;
 
@@ -314,8 +326,13 @@ app.createServer((req, res) => {
 
                                 var VN_Books_XML_clone = new DOMParser().parseFromString(new XMLSerializer().serializeToString(VN_Books_XML));
                                 var EN_Books_XML_clone = new DOMParser().parseFromString(new XMLSerializer().serializeToString(EN_Books_XML));
+
                                 // Update data  
                                 POST.Sale_Product(VN_Books_XML_clone, EN_Books_XML_clone, data_receive, tmp);
+
+                                // If success then writing sale data to Sale_Staff_XML
+                                UPDATE.Update_Sale_Staff(Sale_Staff_XML, revenue_staff_dict, data_receive, username);
+                                POST.Save_Sale_Staff_XML(Sale_Staff_XML);
 
                                 // Transfer
                                 VN_Books_XML = VN_Books_XML_clone;
@@ -332,13 +349,34 @@ app.createServer((req, res) => {
 
                                 ALL_Books_Sale_XML = CONVERT.JOIN_2_Sale_XML(VN_Books_Sale_XML, EN_Books_Sale_XML);
 
-                                // TODO: Update revenue_dict and revenue by month
-                                list = CONVERT.Convert_2_Publish_Revenue_Dict(VN_Books_XML, EN_Books_XML);
-                                revenue_dict = list[1];
-
+                                // Update revenue_dict and revenue by month
+                                UPDATE.Update_Revenue_Dict(revenue_dict, data_receive);
                                 sortByRevenue = HANDLE_DATA.Get_Top_10_Revenue(revenue_dict);
                                 revenueByMonth = HANDLE_DATA.List_Revenue_By_Month_Year(VN_Books_XML, EN_Books_XML, new Date().getFullYear());
                                 //
+                            } catch (err) {
+                                data = err.message;
+                                console.log(err.message);
+                                console.log(err.stack);
+                            }
+
+                            res.writeHeader(200, {
+                                'Content-Type': 'text/xml'
+                            });
+                            res.end(`<Ket_qua mess="${data}"></Ket_qua>`);
+                        }
+                        break;
+
+                    case '/delete-product':
+                        {
+                            var dataXML = new DOMParser().parseFromString(data_receive);
+                            var SKU = dataXML.getElementsByTagName("Xoa")[0].getAttribute("SKU");
+
+                            var data = "Xoá thành công";
+                            
+                            try {
+                                HANDLE_DATA.Delete_Book(VN_Books_XML, EN_Books_XML, SKU);
+                                ALL_Books_XML = CONVERT.JOIN_2_XML(VN_Books_XML, EN_Books_XML);
                             } catch (err) {
                                 data = err.message;
                                 console.log(err.message);
@@ -366,6 +404,10 @@ app.createServer((req, res) => {
                 res.end("Request was not support!!!");
                 break;
             case 'DELETE':
+                res.writeHeader(404, {
+                    'Content-Type': 'text/plain'
+                });
+                res.end("Request was not support!!!");
                 break;
         }
     });
