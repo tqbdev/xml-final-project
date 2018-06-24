@@ -173,10 +173,90 @@ class HANDLE_DATA {
                   } else {
                         var list = EN_Books_XML.getElementsByTagName("Danh_sach_Sach")[0];
                         list.removeChild(book);
+
+                        return 'EN';
                   }
             } else {
                   var list = VN_Books_XML.getElementsByTagName("Danh_sach_Sach")[0];
                   list.removeChild(book);
+
+                  return 'VN';
+            }
+      }
+
+      Check_SKU_Exist(xml_data) {
+            var book = xpathSelect(
+                  xml_data,
+                  "/Danh_sach_Sach/Sach[@SKU='" +
+                  SKU +
+                  "']"
+            )[0];
+
+            if (book == null || book == undefined) {
+                  return false;
+            }
+
+            return true;
+      }
+
+      Add_Book(xml_data, book_xml) {
+            var list_book = xml_data.getElementsByTagName("Danh_sach_Sach")[0];
+
+            var new_book = xml_data.createElement("Sach");
+            new_book.setAttribute("SKU", book_xml.getAttribute("SKU"));
+            new_book.setAttribute("Ten", book_xml.getAttribute("Ten"));
+            new_book.setAttribute("NXB", book_xml.getAttribute("NXB"));
+            new_book.setAttribute("Tac_gia", book_xml.getAttribute("Tac_gia"));
+            new_book.setAttribute("Gia_ban", book_xml.getAttribute("Gia_ban"));
+            new_book.setAttribute("Ngay_phat_hanh", book_xml.getAttribute("Ngay_phat_hanh"));
+            new_book.setAttribute("So_luong_ton", book_xml.getAttribute("So_luong_ton"));
+            new_book.setAttribute("Gia_nhap", book_xml.getAttribute("Gia_nhap"));
+            new_book.setAttribute("Loai", book_xml.getAttribute("Loai"));
+
+            list_book.appendChild(new_book);
+      }
+
+      Edit_Book(VN_Books_XML, EN_Books_XML, book_xml) {
+            var book = xpathSelect(
+                  VN_Books_XML,
+                  "/Danh_sach_Sach/Sach[@SKU='" +
+                  SKU +
+                  "']"
+            )[0];
+
+            if (book == null || book == undefined) {
+                  book = xpathSelect(
+                        EN_Books_XML,
+                        "/Danh_sach_Sach/Sach[@SKU='" +
+                        SKU +
+                        "']"
+                  )[0];
+
+                  if (book == null || book == undefined) {
+                        throw "Lỗi! Không tìm thấy sách";
+                  } else {
+                        book.setAttribute("Ten", book_xml.getAttribute("Ten"));
+                        book.setAttribute("NXB", book_xml.getAttribute("NXB"));
+                        book.setAttribute("Tac_gia", book_xml.getAttribute("Tac_gia"));
+                        book.setAttribute("Gia_ban", book_xml.getAttribute("Gia_ban"));
+                        book.setAttribute("Ngay_phat_hanh", book_xml.getAttribute("Ngay_phat_hanh"));
+                        book.setAttribute("So_luong_ton", book_xml.getAttribute("So_luong_ton"));
+                        book.setAttribute("Gia_nhap", book_xml.getAttribute("Gia_nhap"));
+                        book.setAttribute("Loai", book_xml.getAttribute("Loai"));
+
+                        return 'EN';
+                  }
+            } else {
+                  book.setAttribute("Ten", book_xml.getAttribute("Ten"));
+                  book.setAttribute("NXB", book_xml.getAttribute("NXB"));
+                  book.setAttribute("Tac_gia", book_xml.getAttribute("Tac_gia"));
+                  book.setAttribute("Gia_ban", book_xml.getAttribute("Gia_ban"));
+                  book.setAttribute("Ngay_phat_hanh", book_xml.getAttribute("Ngay_phat_hanh"));
+                  book.setAttribute("So_luong_ton", book_xml.getAttribute("So_luong_ton"));
+                  book.setAttribute("Gia_nhap", book_xml.getAttribute("Gia_nhap"));
+                  book.setAttribute("Loai", book_xml.getAttribute("Loai"));
+
+                  return 'VN';
             }
       }
 }

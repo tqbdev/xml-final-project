@@ -289,6 +289,74 @@ app.createServer((req, res) => {
                             request.end(data_receive);
                         }
                         break;
+
+                    case '/add-product':
+                        {
+                            var token_key = headers.token;
+
+                            const options = {
+                                port: 3001,
+                                method: 'POST',
+                                path: original_url,
+                                headers: {
+                                    token: token_key
+                                }
+                            };
+
+                            var res_string = "";
+                            const request = app.request(options, (response) => {
+                                response.setEncoding('utf8');
+                                response.on('data', (chunk) => {
+                                    res_string += chunk;
+                                });
+                                response.on('end', () => {
+                                    res.setHeader('Content-type', 'text/xml');
+                                    res.end(res_string);
+                                });
+                            });
+
+                            request.on('error', (e) => {
+                                console.error(`problem with request: ${e.message}`);
+                            });
+
+                            //console.log(data_receive);
+                            request.end(data_receive);
+                        }
+                        break;
+
+                        case '/edit-product':
+                        {
+                            var token_key = headers.token;
+
+                            const options = {
+                                port: 3001,
+                                method: 'POST',
+                                path: original_url,
+                                headers: {
+                                    token: token_key
+                                }
+                            };
+
+                            var res_string = "";
+                            const request = app.request(options, (response) => {
+                                response.setEncoding('utf8');
+                                response.on('data', (chunk) => {
+                                    res_string += chunk;
+                                });
+                                response.on('end', () => {
+                                    res.setHeader('Content-type', 'text/xml');
+                                    res.end(res_string);
+                                });
+                            });
+
+                            request.on('error', (e) => {
+                                console.error(`problem with request: ${e.message}`);
+                            });
+
+                            console.log(data_receive);
+                            request.end(data_receive);
+                        }
+                        break;
                 }
                 break;
             case 'PUT':

@@ -136,49 +136,73 @@
                                     <label>Mã sản phẩm</label>
                               </div>
                               <div class="col-md-9 entry_information">
-                                    <input class="form-control" type="text" placeholder="Nhập mã sản phẩm" />
+                                    <input class="form-control" type="text" placeholder="Nhập mã sản phẩm" id="new_id" />
                               </div>
 
                               <div class="col-md-3 entry_information">
                                     <label>Tên sản phẩm</label>
                               </div>
                               <div class="col-md-9 entry_information">
-                                    <input class="form-control" type="text" placeholder="Nhập tên sản phẩm" />
+                                    <input class="form-control" type="text" placeholder="Nhập tên sản phẩm" id="new_name" />
+                              </div>
+
+                              <div class="col-md-3 entry_information">
+                                    <label>Tác giả</label>
+                              </div>
+                              <div class="col-md-9 entry_information">
+                                    <input class="form-control" type="text" placeholder="Nhập tên sản phẩm" id="new_author" />
+                              </div>
+
+                              <div class="col-md-3 entry_information">
+                                    <label>Ngày phát hành</label>
+                              </div>
+                              <div class="col-md-9 entry_information">
+                                    <input class="form-control" type="date" placeholder="Nhập tên sản phẩm" id="new_publish" />
                               </div>
 
                               <div class="col-md-3 entry_information">
                                     <label>Nhà sản xuất (NXB)</label>
                               </div>
                               <div class="col-md-9 entry_information">
-                                    <input class="form-control" type="text" placeholder="Nhập tên nhà sản xuất (NXB)" />
+                                    <input class="form-control" type="text" placeholder="Nhập tên nhà sản xuất (NXB)" id="new_manufacturer" />
                               </div>
 
                               <div class="col-md-3 entry_information">
                                     <label>Loại</label>
                               </div>
                               <div class="col-md-9 entry_information">
-                                    <input class="form-control" type="text" placeholder="Nhập loại sản phẩm" />
+                                    <input class="form-control" type="text" placeholder="Nhập loại sản phẩm" id="new_type" />
+                              </div>
+
+                              <div class="col-md-3 entry_information">
+                                    <label>Ngôn ngữ</label>
+                              </div>
+                              <div class="col-md-9 entry_information" id="new_lang">
+                                    <label class="radio-inline">
+                                          <input type="radio" name="lang" value="VN"> Tiếng việt </label>
+                                    <label class="radio-inline">
+                                          <input type="radio" name="lang" value="EN"> English </label>
                               </div>
 
                               <div class="col-md-3 entry_information">
                                     <label>Giá bán (VND)</label>
                               </div>
                               <div class="col-md-9 entry_information">
-                                    <input class="form-control" type="number" placeholder="Nhập giá bán của sản phẩm" />
+                                    <input class="form-control" type="number" placeholder="Nhập giá bán của sản phẩm" id="new_price_sale" />
                               </div>
 
                               <div class="col-md-3 entry_information">
                                     <label>Giá nhập (VND)</label>
                               </div>
                               <div class="col-md-9 entry_information">
-                                    <input class="form-control" type="number" placeholder="Nhập giá nhập về của sản phẩm" />
+                                    <input class="form-control" type="number" placeholder="Nhập giá nhập về của sản phẩm" id="new_price_import" />
                               </div>
 
                               <div class="col-md-3 entry_information">
                                     <label>Số lượng tồn</label>
                               </div>
                               <div class="col-md-9 entry_information">
-                                    <input class="form-control" type="number" placeholder="Nhập số lượng có trong kho" />
+                                    <input class="form-control" type="number" placeholder="Nhập số lượng có trong kho" id="new_stock_amount" />
                               </div>
                         </div>
                   </div>
@@ -196,7 +220,7 @@
             <div class="modal-content">
                   <div class="modal-header" style="float: left; display: flex;">
                         <h4 class="modal-title" style="float: left; display: flex;">
-                              Thêm sản phẩm
+                              Chỉnh sửa sản phẩm
                         </h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                               ×</button>
@@ -204,51 +228,71 @@
                   <div class="modal-body modal_information">
                         <div class="row">
                               <div class="col-md-3 entry_information">
+                                    <label>Mã sản phẩm</label>
+                              </div>
+                              <div class="col-md-9 entry_information">
+                                    <input class="form-control" type="text" placeholder="Nhập mã sản phẩm" disabled id="edit_id" />
+                              </div>
+
+                              <div class="col-md-3 entry_information">
                                     <label>Tên sản phẩm</label>
                               </div>
                               <div class="col-md-9 entry_information">
-                                    <input class="form-control" type="text" placeholder="Nhập tên sản phẩm" />
+                                    <input class="form-control" type="text" placeholder="Nhập tên sản phẩm" id="edit_name" />
+                              </div>
+
+                              <div class="col-md-3 entry_information">
+                                    <label>Tác giả</label>
+                              </div>
+                              <div class="col-md-9 entry_information">
+                                    <input class="form-control" type="text" placeholder="Nhập tên sản phẩm" id="edit_author" />
+                              </div>
+
+                              <div class="col-md-3 entry_information">
+                                    <label>Ngày phát hành</label>
+                              </div>
+                              <div class="col-md-9 entry_information">
+                                    <input class="form-control" type="date" placeholder="Nhập tên sản phẩm" id="edit_publish" />
                               </div>
 
                               <div class="col-md-3 entry_information">
                                     <label>Nhà sản xuất (NXB)</label>
                               </div>
                               <div class="col-md-9 entry_information">
-                                    <input class="form-control" type="text" placeholder="Nhập tên nhà sản xuất (NXB)" />
+                                    <input class="form-control" type="text" placeholder="Nhập tên nhà sản xuất (NXB)" id="edit_manufacturer" />
                               </div>
 
                               <div class="col-md-3 entry_information">
                                     <label>Loại</label>
                               </div>
                               <div class="col-md-9 entry_information">
-                                    <input class="form-control" type="text" placeholder="Nhập loại sản phẩm" />
+                                    <input class="form-control" type="text" placeholder="Nhập loại sản phẩm" id="edit_type" />
                               </div>
 
                               <div class="col-md-3 entry_information">
                                     <label>Giá bán (VND)</label>
                               </div>
                               <div class="col-md-9 entry_information">
-                                    <input class="form-control" type="number" placeholder="Nhập giá bán của sản phẩm" />
+                                    <input class="form-control" type="number" placeholder="Nhập giá bán của sản phẩm" id="edit_price_sale" />
                               </div>
 
                               <div class="col-md-3 entry_information">
                                     <label>Giá nhập (VND)</label>
                               </div>
                               <div class="col-md-9 entry_information">
-                                    <input class="form-control" type="number" placeholder="Nhập giá nhập về của sản phẩm" />
+                                    <input class="form-control" type="number" placeholder="Nhập giá nhập về của sản phẩm" id="edit_price_import" />
                               </div>
 
                               <div class="col-md-3 entry_information">
                                     <label>Số lượng tồn</label>
                               </div>
                               <div class="col-md-9 entry_information">
-                                    <input class="form-control" type="number" placeholder="Nhập số lượng có trong kho" />
+                                    <input class="form-control" type="number" placeholder="Nhập số lượng có trong kho" id="edit_stock_amount" />
                               </div>
                         </div>
                   </div>
                   <div class="modal-footer modal_information">
-                        <button class="btn btn-success">Xong</button>
-                        <button class="btn btn-info">Hủy chỉnh sửa</button>
+                        <button class="btn btn-success" id="editDoneBtn">Xong</button>
                   </div>
             </div>
       </div>
@@ -269,14 +313,6 @@
 <script>
       $("#btnAddItem").click(function () {
             $("#modalAddItem").modal("show");
-      });
-
-      $("#btnEditItem").click(function () {
-            $("#modalEditItem").modal("show");
-      });
-
-      $("#btnEditItem2").click(function () {
-            $("#modalEditItem").modal("show");
       });
 
       $("#dashboard").show();

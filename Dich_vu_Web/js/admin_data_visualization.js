@@ -44,9 +44,169 @@ var XML_DATA_PRODUCTS = null;
 var table_data = null;
 
 $(document).ready(function () {
+      $("#addDoneBtn").click(function () {
+            addProduct();
+      });
+
+      $("#editDoneBtn").click(function () {
+            editProduct();
+      });
+
+      $("#modalAddItem").on("shown.bs.modal", function (e) {
+            clearAddModal();
+      });
+
       requireTotalRevenue();
-      requireProducts();     
+      requireProducts();
 });
+
+function clearAddModal() {
+      $("#new_id").val('');
+      $("#new_name").val('');
+      $("#new_author").val('');
+      $("#new_type").val('');
+      $("#new_manufacturer").val('');
+      $("#new_publish").val('');
+      $("#new_price_sale").val('');
+      $("#new_price_import").val('');
+      $("#new_stock_amount").val('');
+}
+
+function editProduct() {
+      var edit_id = $("#edit_id").val();
+      var edit_name = $("#edit_name").val();
+      var edit_author = $("#edit_author").val();
+      var edit_manufacturer = $("#edit_manufacturer").val();
+      var edit_type = $("#edit_type").val();
+      var edit_price_sale = $("#edit_price_sale").val();
+      var edit_publish_date = $("#edit_publish").val();
+      var edit_price_import = $("#edit_price_import").val();
+      var edit_stock_amount = $("#edit_stock_amount").val();
+
+      if (edit_id == "" ||
+            edit_name == "" ||
+            edit_author == "" ||
+            edit_manufacturer == "" ||
+            edit_type == "" ||
+            edit_publish_date == "" ||
+            edit_price_sale == "" ||
+            edit_price_import == "" ||
+            edit_stock_amount == "") {
+
+            alert("Bạn phải hoàn tất biểu mẫu");
+            return;
+      }
+
+      if (isNaN(parseInt(edit_price_sale)) ||
+            isNaN(parseInt(edit_price_import)) ||
+            isNaN(parseInt(edit_stock_amount))) {
+            alert("Một số trường bạn nhập không phù hợp");
+            return;
+      }
+
+      var editProductXMLStr = `<Sua_sach SKU="${edit_id}" Ten="${edit_name}" NXB="${edit_manufacturer}" Tac_gia="${edit_author}" Gia_ban="${edit_price_sale}" Ngay_phat_hanh="${edit_publish_date}" So_luong_ton="${edit_stock_amount}" Gia_nhap="${edit_price_import}" Loai="${edit_type}"></Sua_sach>`;
+
+      $.ajax({
+            headers: {
+                  'token': window.localStorage.getItem('Token-key')
+            },
+            url: "/edit-product",
+            dataType: "xml",
+            type: 'POST',
+            data: editProductXMLStr,
+
+            success: function (data) {
+                  if (data != "") {
+                        var result = data.getElementsByTagName("Ket_qua")[0];
+                        var mess = result.getAttribute("mess");
+
+                        alert(mess);
+                        if (mess == "Chỉnh sửa thành công") {
+                              table_data.destroy();
+                              document.getElementById("loader").style.display = "block";
+                              document.getElementById("table").style.display = "none";
+                              requireTotalRevenue();
+                              requireProducts();
+                              console.log(mess);
+                        }
+                        console.log("OK");
+                        $("#modalEditItem").modal('hide');
+                  }
+            },
+            error: function (xhr, status, error) {
+                  console.log("Error");
+            }
+      });
+}
+
+function addProduct() {
+      var new_id = $("#new_id").val();
+      var new_name = $("#new_name").val();
+      var new_author = $("#new_author").val();
+      var new_manufacturer = $("#new_manufacturer").val();
+      var new_type = $("#new_type").val();
+      var new_price_sale = $("#new_price_sale").val();
+      var new_publish_date = $("#new_publish").val();
+      var new_price_import = $("#new_price_import").val();
+      var new_stock_amount = $("#new_stock_amount").val();
+      var new_lang = $('input[name=lang]:checked', '#new_lang').val();
+
+      if (new_id == "" ||
+            new_name == "" ||
+            new_author == "" ||
+            new_manufacturer == "" ||
+            new_type == "" ||
+            new_price_sale == "" ||
+            new_publish_date == "" ||
+            new_price_import == "" ||
+            new_stock_amount == "" ||
+            new_lang === undefined) {
+
+            alert("Bạn phải hoàn tất biểu mẫu");
+            return;
+      }
+
+      if (isNaN(parseInt(new_price_sale)) ||
+            isNaN(parseInt(new_price_import)) ||
+            isNaN(parseInt(new_stock_amount))) {
+            alert("Một số trường bạn nhập không phù hợp");
+            return;
+      }
+
+      var newProductXMLStr = `<Them_sach SKU="${new_id}" Ten="${new_name}" NXB="${new_manufacturer}" Tac_gia="${new_author}" Gia_ban="${new_price_sale}" Ngay_phat_hanh="${new_publish_date}" So_luong_ton="${new_stock_amount}" Gia_nhap="${new_price_import}" Loai="${new_type}" lang="${new_lang}"></Them_sach>`;
+
+      $.ajax({
+            headers: {
+                  'token': window.localStorage.getItem('Token-key')
+            },
+            url: "/add-product",
+            dataType: "xml",
+            type: 'POST',
+            data: newProductXMLStr,
+
+            success: function (data) {
+                  if (data != "") {
+                        var result = data.getElementsByTagName("Ket_qua")[0];
+                        var mess = result.getAttribute("mess");
+
+                        alert(mess);
+                        if (mess == "Thêm thành công") {
+                              table_data.destroy();
+                              document.getElementById("loader").style.display = "block";
+                              document.getElementById("table").style.display = "none";
+                              requireTotalRevenue();
+                              requireProducts();
+                              console.log(mess);
+                        }
+                        console.log("OK");
+                        $("#modalAddItem").modal('hide');
+                  }
+            },
+            error: function (xhr, status, error) {
+                  console.log("Error");
+            }
+      });
+}
 
 function requireTotalRevenue() {
       $.ajax({
@@ -256,7 +416,39 @@ function Load_Products() {
 }
 
 function editBook(SKU) {
+      setDataEditModal(SKU);
+}
 
+function convertDate(originalDate) {
+      var res = originalDate.split('-');
+
+      var month = res[0];
+      var year = res[1];
+
+      return `${year}-${month}-01`;
+}
+
+function setDataEditModal(SKU) {
+      $("#modalEditItem").modal("show");
+
+      var path = `/Danh_sach_Sach/Sach[@SKU="${SKU}"]`;
+      var book = XML_DATA_PRODUCTS.evaluate(path, XML_DATA_PRODUCTS, null, XPathResult.ANY_TYPE, null).iterateNext();
+
+      if (book == null || book === undefined) {
+            return;
+      }
+
+      var originalDate = book.getAttribute("Ngay_phat_hanh");
+
+      $("#edit_id").val(book.getAttribute("SKU"));
+      $("#edit_name").val(book.getAttribute("Ten"));
+      $("#edit_author").val(book.getAttribute("Tac_gia"));
+      $("#edit_type").val(book.getAttribute("Loai"));
+      $("#edit_manufacturer").val(book.getAttribute("NXB"));
+      $("#edit_publish").val(convertDate(originalDate));
+      $("#edit_price_sale").val(parseInt(book.getAttribute("Gia_ban")));
+      $("#edit_price_import").val(parseInt(book.getAttribute("Gia_nhap")));
+      $("#edit_stock_amount").val(parseInt(book.getAttribute("So_luong_ton")));
 }
 
 function deleteBook(SKU) {

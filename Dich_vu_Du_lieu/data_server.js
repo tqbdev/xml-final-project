@@ -84,21 +84,6 @@ app.createServer((req, res) => {
                 var getMethod = require('./services/GET.js');
 
                 switch (req_origin) {
-                    case '/Store':
-                        if (checkAuth(req.headers) === true) {
-                            res.writeHeader(200, {
-                                'Content-Type': 'text/xml'
-                            });
-                            var data = getMethod.get_CuaHang();
-                            res.end(data);
-                        } else {
-                            res.writeHeader(404, {
-                                'Content-Type': 'text/plain'
-                            });
-                            res.end("Request was not support!!!");
-                        }
-                        break;
-
                     case '/index':
                         res.writeHeader(200, {
                             'Content-Type': 'text/xml'
@@ -373,13 +358,110 @@ app.createServer((req, res) => {
                             var SKU = dataXML.getElementsByTagName("Xoa")[0].getAttribute("SKU");
 
                             var data = "Xoá thành công";
-                            
+
                             try {
-                                HANDLE_DATA.Delete_Book(VN_Books_XML, EN_Books_XML, SKU);
+                                var lang = HANDLE_DATA.Delete_Book(VN_Books_XML, EN_Books_XML, SKU);
                                 ALL_Books_XML = CONVERT.JOIN_2_XML(VN_Books_XML, EN_Books_XML);
+
+                                // Save VN_Books and EN_Books
+                                switch (lang) {
+                                    case 'VN':
+                                        POST.Save_VN_Book_XML(VN_Books_XML);
+                                        VN_Books_XML_Little = CONVERT.Convert_2_Little_XML(VN_Books_XML);
+                                        break;
+                                    case 'EN':
+                                        POST.Save_EN_Book_XML(EN_Books_XML);
+                                        EN_Books_XML_Little = CONVERT.Convert_2_Little_XML(EN_Books_XML);
+                                        break;
+                                }
+
+                                ALL_Books_XML_Little = CONVERT.JOIN_2_XML_Little(VN_Books_XML_Little, EN_Books_XML_Little);
                             } catch (err) {
                                 data = err.message;
                                 console.log(err.message);
+                            }
+
+                            res.writeHeader(200, {
+                                'Content-Type': 'text/xml'
+                            });
+                            res.end(`<Ket_qua mess="${data}"></Ket_qua>`);
+                        }
+                        break;
+
+                    case '/add-product':
+                        {
+                            var dataXML = new DOMParser().parseFromString(data_receive);
+                            var book = dataXML.getElementsByTagName("Them_sach")[0];
+                            var lang = book.getAttribute("lang");
+                            var sku = book.getAttribute("SKU");
+
+                            var data = "";
+                            if (Check_SKU_Exist(ALL_Books_XML_Little, SKU)) {
+                                data = "Mã sách đã tồn tại";
+                            } else {
+                                data = "Thêm thành công";
+
+                                try {
+                                    switch (lang) {
+                                        case 'VN':
+                                            HANDLE_DATA.Add_Book(VN_Books_XML, book);
+                                            POST.Save_VN_Book_XML(VN_Books_XML);
+                                            VN_Books_XML_Little = CONVERT.Convert_2_Little_XML(VN_Books_XML);
+                                            break;
+                                        case 'EN':
+                                            HANDLE_DATA.Add_Book(EN_Books_XML, book);
+                                            POST.Save_EN_Book_XML(EN_Books_XML);
+                                            EN_Books_XML_Little = CONVERT.Convert_2_Little_XML(EN_Books_XML);
+                                            break;
+                                    }
+
+                                    ALL_Books_XML_Little = CONVERT.JOIN_2_XML_Little(VN_Books_XML_Little, EN_Books_XML_Little);
+                                    ALL_Books_XML = CONVERT.JOIN_2_XML(VN_Books_XML, EN_Books_XML);
+                                } catch (err) {
+                                    data = err.message;
+                                    console.log(err.message);
+                                }
+                            }
+
+                            res.writeHeader(200, {
+                                'Content-Type': 'text/xml'
+                            });
+                            res.end(`<Ket_qua mess="${data}"></Ket_qua>`);
+                        }
+                        break;
+
+                    case '/edit-product':
+                        {
+                            var dataXML = new DOMParser().parseFromString(data_receive);
+                            var book = dataXML.getElementsByTagName("Sua_sach")[0];
+                            var sku = book.getAttribute("SKU");
+
+                            var data = "";
+                            if (Check_SKU_Exist(ALL_Books_XML_Little, SKU)) {
+                                data = "Chỉnh sửa thành công";
+
+                                try {
+                                    var lang = HANDLE_DATA.Edit_Book(VN_Books_XML, EN_Books_XML, book);
+
+                                    switch (lang) {
+                                        case 'VN':
+                                            POST.Save_VN_Book_XML(VN_Books_XML);
+                                            VN_Books_XML_Little = CONVERT.Convert_2_Little_XML(VN_Books_XML);
+                                            break;
+                                        case 'EN':
+                                            POST.Save_EN_Book_XML(EN_Books_XML);
+                                            EN_Books_XML_Little = CONVERT.Convert_2_Little_XML(EN_Books_XML);
+                                            break;
+                                    }
+
+                                    ALL_Books_XML_Little = CONVERT.JOIN_2_XML_Little(VN_Books_XML_Little, EN_Books_XML_Little);
+                                    ALL_Books_XML = CONVERT.JOIN_2_XML(VN_Books_XML, EN_Books_XML);
+                                } catch (err) {
+                                    data = err.message;
+                                    console.log(err.message);
+                                }
+                            } else {
+                                data = "Mã SKU không tồn tại";
                             }
 
                             res.writeHeader(200, {
