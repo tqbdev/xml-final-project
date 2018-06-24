@@ -1,8 +1,6 @@
-﻿
-
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Danh_sach_Sach>
-  <Sach SKU="3100012165562" Ten="Chào Mừng Đến Với N.H.K!" NXB="Nhà Xuất Bản Văn Học" Tac_gia="Tatsuhiko Takimoto" Gia_ban="64000" Ngay_phat_hanh="08-2015" So_luong_ton="77" Gia_nhap="51200" Loai="Sách văn học">
+  <Sach SKU="3100012165562" Ten="Chào Mừng Đến Với N.H.K!" NXB="Nhà Xuất Bản Văn Học" Tac_gia="Tatsuhiko Takimoto" Gia_ban="64000" Ngay_phat_hanh="08-2015" So_luong_ton="76" Gia_nhap="51200" Loai="Sách văn học">
     <Danh_sach_Ban_hang>
       <Ban_hang Ngay_ban="2018/03/31" So_luong="2" Gia_ban="64000"/>
       <Ban_hang Ngay_ban="2018/02/27" So_luong="5" Gia_ban="64000"/>

@@ -312,8 +312,14 @@ app.createServer((req, res) => {
                                     }
                                 }
 
+                                var VN_Books_XML_clone = new DOMParser().parseFromString(new XMLSerializer().serializeToString(VN_Books_XML));
+                                var EN_Books_XML_clone = new DOMParser().parseFromString(new XMLSerializer().serializeToString(EN_Books_XML));
                                 // Update data  
-                                POST.Sale_Product(VN_Books_XML, EN_Books_XML, data_receive, tmp);
+                                POST.Sale_Product(VN_Books_XML_clone, EN_Books_XML_clone, data_receive, tmp);
+
+                                // Transfer
+                                VN_Books_XML = VN_Books_XML_clone;
+                                EN_Books_XML = EN_Books_XML_clone;
 
                                 if (tmp & VN) {
                                     POST.Save_VN_Book_XML(VN_Books_XML);
@@ -323,10 +329,15 @@ app.createServer((req, res) => {
                                     POST.Save_EN_Book_XML(EN_Books_XML);
                                     EN_Books_Sale_XML = CONVERT.Convert_2_Sale_XML(EN_Books_XML);
                                 }
-                              
+
                                 ALL_Books_Sale_XML = CONVERT.JOIN_2_Sale_XML(VN_Books_Sale_XML, EN_Books_Sale_XML);
 
                                 // TODO: Update revenue_dict and revenue by month
+                                list = CONVERT.Convert_2_Publish_Revenue_Dict(VN_Books_XML, EN_Books_XML);
+                                revenue_dict = list[1];
+
+                                sortByRevenue = HANDLE_DATA.Get_Top_10_Revenue(revenue_dict);
+                                revenueByMonth = HANDLE_DATA.List_Revenue_By_Month_Year(VN_Books_XML, EN_Books_XML, new Date().getFullYear());
                                 //
                             } catch (err) {
                                 data = err.message;
