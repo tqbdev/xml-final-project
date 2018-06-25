@@ -178,11 +178,12 @@ app.createServer((req, res) => {
                                                 data = new XMLSerializer().serializeToString(data);
                                             }
                                             break;
-                                        case 'stat-staff':
+                                        case 'staff':
                                             if (decoded.admin) {
                                                 data = CONVERT.Convert_Revenue_Staff_2_XML(revenue_staff_dict);
                                                 data = new XMLSerializer().serializeToString(data);
                                             }
+                                            break;
                                         case 'products':
                                             if (decoded.admin) {
                                                 data = new XMLSerializer().serializeToString(CONVERT.Convert_2_Admin_Data(ALL_Books_XML, revenue_dict, viewed_data));
@@ -376,6 +377,8 @@ app.createServer((req, res) => {
                                 }
 
                                 ALL_Books_XML_Little = CONVERT.JOIN_2_XML_Little(VN_Books_XML_Little, EN_Books_XML_Little);
+                                delete viewed_data[SKU];
+                                delete revenue_dict[SKU];
                             } catch (err) {
                                 data = err.message;
                                 console.log(err.message);
@@ -393,10 +396,10 @@ app.createServer((req, res) => {
                             var dataXML = new DOMParser().parseFromString(data_receive);
                             var book = dataXML.getElementsByTagName("Them_sach")[0];
                             var lang = book.getAttribute("lang");
-                            var sku = book.getAttribute("SKU");
+                            var SKU = book.getAttribute("SKU");
 
                             var data = "";
-                            if (Check_SKU_Exist(ALL_Books_XML_Little, SKU)) {
+                            if (HANDLE_DATA.Check_SKU_Exist(ALL_Books_XML_Little, SKU)) {
                                 data = "Mã sách đã tồn tại";
                             } else {
                                 data = "Thêm thành công";
@@ -417,6 +420,9 @@ app.createServer((req, res) => {
 
                                     ALL_Books_XML_Little = CONVERT.JOIN_2_XML_Little(VN_Books_XML_Little, EN_Books_XML_Little);
                                     ALL_Books_XML = CONVERT.JOIN_2_XML(VN_Books_XML, EN_Books_XML);
+
+                                    viewed_data[SKU] = 0;
+                                    revenue_dict[SKU] = 0;
                                 } catch (err) {
                                     data = err.message;
                                     console.log(err.message);
@@ -434,10 +440,10 @@ app.createServer((req, res) => {
                         {
                             var dataXML = new DOMParser().parseFromString(data_receive);
                             var book = dataXML.getElementsByTagName("Sua_sach")[0];
-                            var sku = book.getAttribute("SKU");
+                            var SKU = book.getAttribute("SKU");
 
                             var data = "";
-                            if (Check_SKU_Exist(ALL_Books_XML_Little, SKU)) {
+                            if (HANDLE_DATA.Check_SKU_Exist(ALL_Books_XML_Little, SKU)) {
                                 data = "Chỉnh sửa thành công";
 
                                 try {
@@ -459,6 +465,7 @@ app.createServer((req, res) => {
                                 } catch (err) {
                                     data = err.message;
                                     console.log(err.message);
+                                    console.log(err.stack);
                                 }
                             } else {
                                 data = "Mã SKU không tồn tại";

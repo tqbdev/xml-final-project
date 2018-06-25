@@ -1,26 +1,16 @@
 ﻿
 
 
+
+
+
+
+
+
+
 <?xml version="1.0" encoding="utf-8"?>
 <Danh_sach_Sach>
-  <Sach SKU="3100012165562" Ten="Chào Mừng Đến Với N.H.K!" NXB="Nhà Xuất Bản Văn Học" Tac_gia="Tatsuhiko Takimoto" Gia_ban="64000" Ngay_phat_hanh="08-2015" So_luong_ton="70" Gia_nhap="51200" Loai="Sách văn học">
-    <Danh_sach_Ban_hang>
-      <Ban_hang Ngay_ban="2018/03/31" So_luong="2" Gia_ban="64000"/>
-      <Ban_hang Ngay_ban="2018/02/27" So_luong="5" Gia_ban="64000"/>
-      <Ban_hang Ngay_ban="2018/04/02" So_luong="4" Gia_ban="64000"/>
-      <Ban_hang Ngay_ban="2018/01/24" So_luong="4" Gia_ban="64000"/>
-      <Ban_hang Ngay_ban="2018/02/05" So_luong="2" Gia_ban="64000"/>
-      <Ban_hang Ngay_ban="2018/02/12" So_luong="4" Gia_ban="64000"/>
-      <Ban_hang Ngay_ban="2018/04/27" So_luong="2" Gia_ban="64000"/>
-      <Ban_hang Ngay_ban="2018/02/05" So_luong="4" Gia_ban="64000"/>
-      <Ban_hang Ngay_ban="2018/06/24" So_luong="1" Gia_ban="64000"/>
-      <Ban_hang Ngay_ban="2018/06/24" So_luong="1" Gia_ban="64000"/>
-      <Ban_hang Ngay_ban="2018/06/24" So_luong="1" Gia_ban="64000"/>
-      <Ban_hang Ngay_ban="2018/06/24" So_luong="1" Gia_ban="64000"/>
-      <Ban_hang Ngay_ban="2018/06/24" So_luong="1" Gia_ban="64000"/>
-    </Danh_sach_Ban_hang>
-  </Sach>
-  <Sach SKU="2435439964247" Ten="Mình Là Cá, Việc Của Mình Là Bơi" NXB="Nhà Xuất Bản Thế Giới" Tac_gia="Takeshi Furukawa" Gia_ban="62299" Ngay_phat_hanh="08-2017" So_luong_ton="82" Gia_nhap="49840" Loai="Sách kỹ năng - Sống đẹp">
+  <Sach SKU="2435439964247" Ten="Mình Là Cá, Việc Của Mình" NXB="Nhà Xuất Bản Thế Giới" Tac_gia="Takeshi Furukawa" Gia_ban="62299" Ngay_phat_hanh="08-2017" So_luong_ton="81" Gia_nhap="49840" Loai="Sách kỹ năng - Sống đẹp">
     <Danh_sach_Ban_hang>
       <Ban_hang Ngay_ban="2018/04/05" So_luong="5" Gia_ban="62299"/>
       <Ban_hang Ngay_ban="2018/01/28" So_luong="2" Gia_ban="62299"/>
@@ -33,6 +23,7 @@
       <Ban_hang Ngay_ban="2018/03/07" So_luong="1" Gia_ban="62299"/>
       <Ban_hang Ngay_ban="2018/05/04" So_luong="1" Gia_ban="62299"/>
       <Ban_hang Ngay_ban="2018/06/24" So_luong="1" Gia_ban="62299"/>
+      <Ban_hang Ngay_ban="2018/06/25" So_luong="1" Gia_ban="62299"/>
     </Danh_sach_Ban_hang>
   </Sach>
   <Sach SKU="2506010458896" Ten="Khi Hơi Thở Hóa Thinh Không" NXB="Nhà Xuất Bản Lao Động" Tac_gia="Paul Kalanithi" Gia_ban="65400" Ngay_phat_hanh="07-2017" So_luong_ton="96" Gia_nhap="52320" Loai="Sách văn học">
@@ -37174,6 +37165,11 @@
       <Ban_hang Ngay_ban="2018/01/24" So_luong="2" Gia_ban="47400"/>
       <Ban_hang Ngay_ban="2018/02/08" So_luong="2" Gia_ban="47400"/>
       <Ban_hang Ngay_ban="2018/03/12" So_luong="2" Gia_ban="47400"/>
+    </Danh_sach_Ban_hang>
+  </Sach>
+  <Sach SKU="0000000000001" Ten="Test thêm sách" NXB="TqbDev Coperation" Tac_gia="Trần Quốc Bảo" Gia_ban="100000" Ngay_phat_hanh="08-1997" So_luong_ton="127" Gia_nhap="90000" Loai="Văn học">
+    <Danh_sach_Ban_hang>
+      <Ban_hang Ngay_ban="2018/06/25" So_luong="1" Gia_ban="100000"/>
     </Danh_sach_Ban_hang>
   </Sach>
 </Danh_sach_Sach>

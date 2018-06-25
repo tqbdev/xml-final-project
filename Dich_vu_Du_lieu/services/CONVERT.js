@@ -397,7 +397,7 @@ class CONVERT {
                   "<Danh_sach_Doanh_thu></Danh_sach_Doanh_thu>"
             );
 
-            var list_sale = result_xml.getElementsByClassName("Danh_sach_Doanh_thu")[0];
+            var list_sale = result_xml.getElementsByTagName("Danh_sach_Doanh_thu")[0];
 
             for (var username in revenue_staff_dict) {
                   var staff = result_xml.createElement("Nhan_vien");

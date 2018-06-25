@@ -160,7 +160,7 @@ class HANDLE_DATA {
                   "']"
             )[0];
 
-            if (book == null || book == undefined) {
+            if (book == null || book === undefined) {
                   book = xpathSelect(
                         EN_Books_XML,
                         "/Danh_sach_Sach/Sach[@SKU='" +
@@ -168,7 +168,7 @@ class HANDLE_DATA {
                         "']"
                   )[0];
 
-                  if (book == null || book == undefined) {
+                  if (book == null || book === undefined) {
                         throw "Lỗi! Không tìm thấy sách";
                   } else {
                         var list = EN_Books_XML.getElementsByTagName("Danh_sach_Sach")[0];
@@ -184,7 +184,7 @@ class HANDLE_DATA {
             }
       }
 
-      Check_SKU_Exist(xml_data) {
+      Check_SKU_Exist(xml_data, SKU) {
             var book = xpathSelect(
                   xml_data,
                   "/Danh_sach_Sach/Sach[@SKU='" +
@@ -192,7 +192,7 @@ class HANDLE_DATA {
                   "']"
             )[0];
 
-            if (book == null || book == undefined) {
+            if (book == null || book === undefined) {
                   return false;
             }
 
@@ -217,6 +217,8 @@ class HANDLE_DATA {
       }
 
       Edit_Book(VN_Books_XML, EN_Books_XML, book_xml) {
+            var SKU = book_xml.getAttribute("SKU");
+
             var book = xpathSelect(
                   VN_Books_XML,
                   "/Danh_sach_Sach/Sach[@SKU='" +
@@ -224,7 +226,7 @@ class HANDLE_DATA {
                   "']"
             )[0];
 
-            if (book == null || book == undefined) {
+            if (book == null || book === undefined) {
                   book = xpathSelect(
                         EN_Books_XML,
                         "/Danh_sach_Sach/Sach[@SKU='" +
@@ -232,7 +234,7 @@ class HANDLE_DATA {
                         "']"
                   )[0];
 
-                  if (book == null || book == undefined) {
+                  if (book == null || book === undefined) {
                         throw "Lỗi! Không tìm thấy sách";
                   } else {
                         book.setAttribute("Ten", book_xml.getAttribute("Ten"));

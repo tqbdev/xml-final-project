@@ -63,7 +63,7 @@ var POST = {
                         check = VN;
                   }
 
-                  if (book_in_xml == null) {
+                  if (book_in_xml == null || book_in_xml === undefined) {
                         throw "Lỗi! Không tìm thấy mã SKU của sách";
                   } else {
                         if (permit & 1 != check) {
@@ -88,6 +88,11 @@ var POST = {
                               "']/Danh_sach_Ban_hang"
                         )[0];
 
+                        if (list_sale == null || list_sale === undefined) {
+                              list_sale = VN_Books_XML.createElement("Danh_sach_Ban_hang");
+                              book_in_xml.appendChild(list_sale);
+                        }
+
                         var new_sale = VN_Books_XML.createElement("Ban_hang");
                         new_sale.setAttribute("Ngay_ban", day_sale);
                         new_sale.setAttribute("So_luong", amount);
@@ -101,6 +106,11 @@ var POST = {
                               SKU +
                               "']/Danh_sach_Ban_hang"
                         )[0];
+
+                        if (list_sale == null || list_sale === undefined) {
+                              list_sale = EN_Books_XML.createElement("Danh_sach_Ban_hang");
+                              book_in_xml.appendChild(list_sale);
+                        }
 
                         var new_sale = VN_Books_XML.createElement("Ban_hang");
                         new_sale.setAttribute("Ngay_ban", day_sale);

@@ -40,6 +40,7 @@ const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
 
 var XML_DATA_STAT = null;
 var XML_DATA_PRODUCTS = null;
+var XML_DATA_STAFF = null;
 
 var table_data = null;
 
@@ -56,6 +57,7 @@ $(document).ready(function () {
             clearAddModal();
       });
 
+      requireStaffRevenue();
       requireTotalRevenue();
       requireProducts();
 });
@@ -70,6 +72,28 @@ function clearAddModal() {
       $("#new_price_sale").val('');
       $("#new_price_import").val('');
       $("#new_stock_amount").val('');
+}
+
+function requireStaffRevenue() {
+      $.ajax({
+            headers: {
+                  'token': window.localStorage.getItem('Token-key')
+            },
+            url: "/admin?p=staff",
+            dataType: "xml",
+            type: 'GET',
+
+            success: function (data) {
+                  if (data != "") {
+                        XML_DATA_STAFF = data;
+                        drawChartStaff();
+                        console.log("OK");
+                  }
+            },
+            error: function (xhr, status, error) {
+                  console.log("Error");
+            }
+      });
 }
 
 function editProduct() {
@@ -104,7 +128,7 @@ function editProduct() {
             return;
       }
 
-      var editProductXMLStr = `<Sua_sach SKU="${edit_id}" Ten="${edit_name}" NXB="${edit_manufacturer}" Tac_gia="${edit_author}" Gia_ban="${edit_price_sale}" Ngay_phat_hanh="${edit_publish_date}" So_luong_ton="${edit_stock_amount}" Gia_nhap="${edit_price_import}" Loai="${edit_type}"></Sua_sach>`;
+      var editProductXMLStr = `<Sua_sach SKU="${edit_id}" Ten="${edit_name}" NXB="${edit_manufacturer}" Tac_gia="${edit_author}" Gia_ban="${edit_price_sale}" Ngay_phat_hanh="${convertDateToXMLData(edit_publish_date)}" So_luong_ton="${edit_stock_amount}" Gia_nhap="${edit_price_import}" Loai="${edit_type}"></Sua_sach>`;
 
       $.ajax({
             headers: {
@@ -137,6 +161,12 @@ function editProduct() {
                   console.log("Error");
             }
       });
+}
+
+function convertDateToXMLData(date) {
+      var res = date.toString().split('-');
+
+      return `${res[1]}-${res[0]}`;
 }
 
 function addProduct() {
@@ -173,7 +203,7 @@ function addProduct() {
             return;
       }
 
-      var newProductXMLStr = `<Them_sach SKU="${new_id}" Ten="${new_name}" NXB="${new_manufacturer}" Tac_gia="${new_author}" Gia_ban="${new_price_sale}" Ngay_phat_hanh="${new_publish_date}" So_luong_ton="${new_stock_amount}" Gia_nhap="${new_price_import}" Loai="${new_type}" lang="${new_lang}"></Them_sach>`;
+      var newProductXMLStr = `<Them_sach SKU="${new_id}" Ten="${new_name}" NXB="${new_manufacturer}" Tac_gia="${new_author}" Gia_ban="${new_price_sale}" Ngay_phat_hanh="${convertDateToXMLData(new_publish_date)}" So_luong_ton="${new_stock_amount}" Gia_nhap="${new_price_import}" Loai="${new_type}" lang="${new_lang}"></Them_sach>`;
 
       $.ajax({
             headers: {
@@ -295,6 +325,74 @@ function CreateArrayWithXMLStat() {
       }
 
       return result_arr;
+}
+
+function CreateArrayWithXMLStaff() {
+      var staff = [];
+      var revenue = [];
+      var list_staff = XML_DATA_STAFF.getElementsByTagName("Nhan_vien");
+
+      for (var i = 0; i < list_staff.length; i++) {
+            var staf = list_staff[i];
+           
+            staff[i] = staf.getAttribute("username");
+            revenue[i] = staf.getAttribute("Doanh_thu");
+      }
+
+      return [staff, revenue];
+}
+
+function drawChartStaff() {
+      var dataArray = CreateArrayWithXMLStaff();
+
+      var ctx = document.getElementById("staffChart");
+      new Chart(ctx, {
+            type: 'bar',
+            data: {
+                  labels: dataArray[0],
+                  datasets: [{
+                        label: 'Tổng doanh thu',
+                        backgroundColor: 'green',
+                        borderColor: 'green',
+                        data: dataArray[1],
+                        fill: false
+                  }]
+            },
+            options: {
+                  responsive: true,
+                  title: {
+                        display: true,
+                        text: 'Tổng doanh thu của từng nhân viên',
+                        fontSize: 20,
+                  },
+                  tooltips: {
+                        mode: 'index',
+                        intersect: false,
+                  },
+                  hover: {
+                        mode: 'nearest',
+                        intersect: true
+                  },
+                  scales: {
+                        xAxes: [{
+                              display: true,
+                              scaleLabel: {
+                                    display: true,
+                                    labelString: 'Staff',
+                                    fontSize: 16
+                              }
+                        }],
+                        yAxes: [{
+                              display: true,
+                              scaleLabel: {
+                                    display: true,
+                                    labelString: 'Revenue',
+                                    fontSize: 16
+                              }
+                        }]
+                  }
+            }
+      });
 }
 
 function drawChart() {
